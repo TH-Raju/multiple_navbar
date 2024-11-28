@@ -3,10 +3,13 @@ import { AllImages } from "@/assets/AllImages";
 import { Form, Input, Button, Checkbox, Typography } from "antd"; // Import necessary components
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const ForgotPasswordEmail = () => {
+  const route = useRouter();
   const onFinish = (values) => {
     console.log("Success:", values);
+    route.push("/verification-code");
   };
 
   return (
