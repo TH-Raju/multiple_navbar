@@ -55,7 +55,7 @@ const LogInPage = () => {
               </Form.Item>
               <div>
                 <Link
-                  href="/forgot-password"
+                  href="/forgot-password-email"
                   className="md:text-base text-sm text-black hover:text-yellow-500 underline"
                 >
                   Forgot Password?
