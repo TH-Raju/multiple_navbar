@@ -1,5 +1,7 @@
 "use client";
+import { AllImages } from "@/assets/AllImages";
 import { Form, Input, Button, Checkbox, Typography } from "antd"; // Import necessary components
+import Image from "next/image";
 import Link from "next/link";
 
 const ForgotPasswordEmail = () => {
@@ -8,8 +10,9 @@ const ForgotPasswordEmail = () => {
   };
 
   return (
-    <div className=" border border-red-800 h-screen flex flex-col justify-center bg-gray-100">
-      <div className="flex md:flex-row flex-col ">
+    <div className="bg-gray-100 p-10">
+      <Image src={AllImages.logoBlack} alt="logo" className=" lg:h-full h-7" />
+      <div className="  h-screen flex items-center -mt-14">
         <div className=" flex flex-col justify-center max-w-xl px-6 py-8 bg-white shadow-xl rounded-lg  mx-auto md:w-[50%]">
           <Form name="login" onFinish={onFinish} layout="vertical">
             {/* Email */}

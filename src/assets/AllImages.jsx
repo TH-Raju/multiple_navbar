@@ -8,9 +8,11 @@ import aiIcon from "./icons/ai.png";
 import googleIcon from "./icons/googleIcon.png";
 import linkedinIcon from "./icons/linkedinIcon.png";
 import logo from "./logo.png";
+import logoBlack from "./logo-black.png";
 
 export const AllImages = {
   logo,
+  logoBlack,
   frameIcon,
   storyIcon,
   pathIcon,
