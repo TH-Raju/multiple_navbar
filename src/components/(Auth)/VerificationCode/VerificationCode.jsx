@@ -14,7 +14,7 @@ const VerificationCode = () => {
   const handleVerifyOtp = async () => {
     console.log("Received OTP for verification:", otp);
     setOtp("");
-    route.push("/verification-code");
+    route.push("/reset-password");
   };
 
   return (
