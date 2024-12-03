@@ -1,8 +1,12 @@
 import { MyLinkButton } from "@/components/shared/common/my-link-button";
 import { BookOpen } from "lucide-react";
-import { IExercise } from "../page";
 
-export default function ExerciseCard({ item }: { item: IExercise }) {
+export interface IExercise {
+  id: string;
+  label: string;
+}
+
+export const ExerciseCard = ({ item }: { item: IExercise }) => {
   return (
     <div className="border-2 p-5 rounded-md space-y-6 bg-gray-50">
       <div className="flex items-center gap-2 text-gray-700">
@@ -13,10 +17,10 @@ export default function ExerciseCard({ item }: { item: IExercise }) {
 
       <MyLinkButton
         href="/"
-        className="bg-transparent text-gray-500 border-2 w-full text-center hover:bg-gray-50"
+        className="bg-transparent text-gray-500 border-2 w-full text-center hover:bg-white hover:text-black"
       >
-        Open Lesson
+        Open Exercise
       </MyLinkButton>
     </div>
   );
-}
+};

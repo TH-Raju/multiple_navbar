@@ -46,7 +46,7 @@ const LayoutComponent = ({ children, params }) => {
       <div className="py-6">
         <div className="lg:flex items-center gap-2 relative">
           <MySectionTitle
-            title={`${params.tools}`.toUpperCase()}
+            title={`${params.tools}`.split("-").join(" ").toUpperCase()}
             className="lg:absolute left-0 top-1 text-center py-2"
           />
           <div className="w-full flex justify-center">

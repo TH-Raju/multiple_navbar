@@ -5,6 +5,7 @@ import { Button, ConfigProvider, Drawer, Layout, Menu, theme } from "antd";
 import Sider from "antd/es/layout/Sider";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
 import { useEffect, useState } from "react";
 import { GoHomeFill } from "react-icons/go";
@@ -33,9 +34,29 @@ const LayoutComponent = ({ children }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const pathname = usePathname();
+  console.log(pathname.split("/"));
+
+  const [current, setCurrent] = useState(
+    pathname === "/" || pathname === "" ? "overview" : pathname.split("/")[1]
+  );
+  //or simply use const [current, setCurrent] = useState(location.pathname)
+
+  useEffect(() => {
+    if (pathname) {
+      if (current !== pathname) {
+        setCurrent(pathname.split("/")[1]);
+      }
+    }
+  }, [pathname, current]);
+
+  function handleClick(e) {
+    setCurrent(e.key);
+  }
+
   const items = [
     {
-      key: "1",
+      key: "overview",
       icon: <GoHomeFill className="text-yellow-400 text-2xl  " />,
       label: (
         <p className="text-base mt-1">
@@ -44,7 +65,7 @@ const LayoutComponent = ({ children }) => {
       ),
     },
     {
-      key: "2",
+      key: "framing",
       icon: <MdOutlineFilterFrames className="text-yellow-400 text-2xl  " />,
       label: (
         <p className="text-base mt-1">
@@ -53,9 +74,13 @@ const LayoutComponent = ({ children }) => {
       ),
     },
     {
-      key: "3",
+      key: "storylining",
       icon: <PiNetworkFill className="text-yellow-400 text-2xl  " />,
-      label: <p className="text-base mt-1">Storylining</p>,
+      label: (
+        <p className="text-base mt-1">
+          <Link href={"/storylining"}>Storylining</Link>
+        </p>
+      ),
     },
   ];
 
@@ -112,6 +137,8 @@ const LayoutComponent = ({ children }) => {
                 className=" mt-6 bg-[#f5f6f8]"
                 defaultSelectedKeys={["1"]}
                 items={items}
+                selectedKeys={[current]}
+                onClick={handleClick}
               />
             </Sider>
           </>

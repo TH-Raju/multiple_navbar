@@ -88,7 +88,6 @@ const exercises: IExercise[] = [
     label: "Introduction to Storylining",
   },
 ];
-
 export default function FramingToolsPage() {
   return (
     <div className="">

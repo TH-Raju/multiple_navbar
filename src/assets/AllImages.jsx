@@ -7,6 +7,7 @@ import linkedinIcon from "./icons/linkedinIcon.png";
 import optionIcon from "./icons/option.png";
 import pathIcon from "./icons/path.png";
 import storyIcon from "./icons/story.png";
+import storyliningIcon from "./icons/storylining.png";
 import videoIcon from "./icons/video.png";
 import logoBlack from "./logo-black.png";
 import logo from "./logo.png";
@@ -29,4 +30,5 @@ export const AllImages = {
   framing,
   videoIcon,
   videoThumb,
+  storyliningIcon,
 };

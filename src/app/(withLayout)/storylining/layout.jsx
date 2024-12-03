@@ -1,8 +1,9 @@
 import { AllImages } from "@/assets/AllImages";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
+import { Dropdown, Layout, Space } from "antd";
 import Image from "next/image";
 import Link from "next/link";
+const { Header, Content } = Layout;
 
 const LayoutComponent = ({ children }) => {
   const items = [
@@ -10,10 +11,10 @@ const LayoutComponent = ({ children }) => {
       label: (
         <Link
           rel="noopener noreferrer"
-          href="/framing/scq"
+          href="/storylining/headline"
           className="text-gray-500 font-medium"
         >
-          SCQ
+          Headline
         </Link>
       ),
       key: "0",
@@ -22,13 +23,25 @@ const LayoutComponent = ({ children }) => {
       label: (
         <Link
           rel="noopener noreferrer"
-          href="/framing/mcq"
+          href="/storylining/horizontal-logic"
           className="text-gray-500 font-medium"
         >
-          MCQ
+          Horizontal Logic
         </Link>
       ),
       key: "1",
+    },
+    {
+      label: (
+        <Link
+          rel="noopener noreferrer"
+          href="/storylining/vertical-logic"
+          className="text-gray-500 font-medium"
+        >
+          Vertical Logic
+        </Link>
+      ),
+      key: "2",
     },
   ];
 
@@ -37,7 +50,7 @@ const LayoutComponent = ({ children }) => {
       <div>
         <div className="flex items-center relative">
           <div className="hidden md:block absolute left-0 top-0">
-            <Image src={AllImages.framing} alt="logo" />
+            <Image src={AllImages.storyliningIcon} alt="logo" />
           </div>
           <div className="w-full flex gap-6 items-center justify-center">
             <Link
