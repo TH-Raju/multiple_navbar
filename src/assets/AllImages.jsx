@@ -1,14 +1,17 @@
-import frameIcon from "./icons/framing.png";
-import storyIcon from "./icons/story.png";
-import pathIcon from "./icons/path.png";
-import videoIcon from "./icons/video.png";
-import classIcon from "./icons/class.png";
-import optionIcon from "./icons/option.png";
+import framing from "./framing.png";
 import aiIcon from "./icons/ai.png";
+import classIcon from "./icons/class.png";
+import frameIcon from "./icons/framing.png";
 import googleIcon from "./icons/googleIcon.png";
 import linkedinIcon from "./icons/linkedinIcon.png";
-import logo from "./logo.png";
+import optionIcon from "./icons/option.png";
+import pathIcon from "./icons/path.png";
+import storyIcon from "./icons/story.png";
+import videoIcon from "./icons/video.png";
 import logoBlack from "./logo-black.png";
+import logo from "./logo.png";
+import defaultAvatar from "./user-avatar.png";
+import videoThumb from "./video-thumb.png";
 
 export const AllImages = {
   logo,
@@ -22,4 +25,8 @@ export const AllImages = {
   googleIcon,
   linkedinIcon,
   aiIcon,
+  defaultAvatar,
+  framing,
+  videoIcon,
+  videoThumb,
 };

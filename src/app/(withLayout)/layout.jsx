@@ -1,20 +1,15 @@
 "use client";
-import { useState, useEffect } from "react";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  ApartmentOutlined,
-  HomeFilled,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
-import { Button, ConfigProvider, Layout, Menu, Drawer, theme } from "antd";
 import { AllImages } from "@/assets/AllImages";
-import Image from "next/image";
-import { PiNetworkFill } from "react-icons/pi";
-import { GoHomeFill } from "react-icons/go";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Button, ConfigProvider, Drawer, Layout, Menu, theme } from "antd";
 import Sider from "antd/es/layout/Sider";
+import Image from "next/image";
+import Link from "next/link";
+import NextTopLoader from "nextjs-toploader";
+import { useEffect, useState } from "react";
+import { GoHomeFill } from "react-icons/go";
 import { MdOutlineFilterFrames } from "react-icons/md";
+import { PiNetworkFill } from "react-icons/pi";
 const { Header, Content } = Layout;
 
 const LayoutComponent = ({ children }) => {
@@ -42,12 +37,20 @@ const LayoutComponent = ({ children }) => {
     {
       key: "1",
       icon: <GoHomeFill className="text-yellow-400 text-2xl  " />,
-      label: <p className="text-base mt-1">Overview</p>,
+      label: (
+        <p className="text-base mt-1">
+          <Link href={"/overview"}>Overview</Link>
+        </p>
+      ),
     },
     {
       key: "2",
       icon: <MdOutlineFilterFrames className="text-yellow-400 text-2xl  " />,
-      label: <p className="text-base mt-1">Framing</p>,
+      label: (
+        <p className="text-base mt-1">
+          <Link href={"/framing"}>Framing</Link>
+        </p>
+      ),
     },
     {
       key: "3",
@@ -70,6 +73,7 @@ const LayoutComponent = ({ children }) => {
         },
       }}
     >
+      <NextTopLoader height={3} />
       <Layout>
         {/* Conditional Rendering of Sider vs Drawer */}
         {!isMobile ? (
@@ -102,6 +106,7 @@ const LayoutComponent = ({ children }) => {
                   height: 64,
                 }}
               />
+
               <Menu
                 mode="inline"
                 className=" mt-6 bg-[#f5f6f8]"
@@ -141,22 +146,53 @@ const LayoutComponent = ({ children }) => {
             }}
           >
             {/* Custom Button for Desktop Trigger */}
-            {/* <Button
-              type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => {
-                if (isMobile) {
-                  toggleDrawer(); // Toggle Drawer on mobile
-                } else {
-                  setCollapsed(!collapsed); // Toggle Sider on larger screens
-                }
-              }}
-              style={{
-                fontSize: "16px",
-                width: 64,
-                height: 64,
-              }}
-            /> */}
+            {!isMobile ? (
+              <div className="flex items-center h-full ml-5 justify-between">
+                <Image src={AllImages.logoBlack} alt="logo" className="" />
+                <div className="px-6">
+                  <Image
+                    src={AllImages.defaultAvatar}
+                    alt="logo"
+                    className="w-10 h-10 object-cover rounded-full"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center">
+                <Button
+                  type="text"
+                  icon={
+                    collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />
+                  }
+                  onClick={() => {
+                    if (isMobile) {
+                      toggleDrawer(); // Toggle Drawer on mobile
+                    } else {
+                      setCollapsed(!collapsed); // Toggle Sider on larger screens
+                    }
+                  }}
+                  style={{
+                    fontSize: "16px",
+                    width: 64,
+                    height: 64,
+                  }}
+                />
+                <div className="flex w-full justify-between items-center">
+                  <Image
+                    src={AllImages.logoBlack}
+                    alt="logo"
+                    className="w-20 lg:w-fit h-fit"
+                  />
+                  <div className="px-6">
+                    <Image
+                      src={AllImages.defaultAvatar}
+                      alt="logo"
+                      className="w-10 h-10 object-cover rounded-full"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </Header>
           <Content
             style={{
