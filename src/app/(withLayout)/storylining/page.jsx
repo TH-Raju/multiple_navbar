@@ -40,7 +40,7 @@ const FramingPage = () => {
       </p>
 
       <MySpacer className="h-6" />
-      <MyLinkButton href={"/"} className="uppercase">
+      <MyLinkButton href={"/storylining/headline"} className="uppercase">
         Start here
       </MyLinkButton>
     </div>

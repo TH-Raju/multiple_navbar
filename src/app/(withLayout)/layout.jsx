@@ -35,7 +35,6 @@ const LayoutComponent = ({ children }) => {
   }, []);
 
   const pathname = usePathname();
-  console.log(pathname.split("/"));
 
   const [current, setCurrent] = useState(
     pathname === "/" || pathname === "" ? "overview" : pathname.split("/")[1]
@@ -57,27 +56,33 @@ const LayoutComponent = ({ children }) => {
   const items = [
     {
       key: "overview",
-      icon: <GoHomeFill className="text-yellow-400 text-2xl  " />,
+      icon: (
+        <GoHomeFill className="text-yellow-400 text-2xl h-full text-center" />
+      ),
       label: (
-        <p className="text-base mt-1">
+        <p className="text-base">
           <Link href={"/overview"}>Overview</Link>
         </p>
       ),
     },
     {
       key: "framing",
-      icon: <MdOutlineFilterFrames className="text-yellow-400 text-2xl  " />,
+      icon: (
+        <MdOutlineFilterFrames className="text-yellow-400 text-2xl items-center h-full text-center" />
+      ),
       label: (
-        <p className="text-base mt-1">
+        <p className="text-base">
           <Link href={"/framing"}>Framing</Link>
         </p>
       ),
     },
     {
       key: "storylining",
-      icon: <PiNetworkFill className="text-yellow-400 text-2xl  " />,
+      icon: (
+        <PiNetworkFill className="text-yellow-400 text-2xl items-center h-full text-center" />
+      ),
       label: (
-        <p className="text-base mt-1">
+        <p className="text-base">
           <Link href={"/storylining"}>Storylining</Link>
         </p>
       ),
@@ -100,10 +105,49 @@ const LayoutComponent = ({ children }) => {
     >
       <NextTopLoader height={3} />
       <Layout>
-        {/* Conditional Rendering of Sider vs Drawer */}
-        {!isMobile ? (
-          // On larger screens, use Sider with custom trigger
-          <>
+        <Header
+          style={{
+            padding: 0,
+            background: "#f5f6f8",
+          }}
+        >
+          {/* Custom Button for Desktop Trigger */}
+          <div className="flex items-center">
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => {
+                if (isMobile) {
+                  toggleDrawer(); // Toggle Drawer on mobile
+                } else {
+                  setCollapsed(!collapsed); // Toggle Sider on larger screens
+                }
+              }}
+              style={{
+                fontSize: "16px",
+                width: 64,
+                height: 64,
+              }}
+            />
+            <div className="flex w-full justify-between items-center px-4">
+              <Image
+                src={AllImages.logoBlack}
+                alt="logo"
+                className="w-20 lg:w-fit h-fit"
+              />
+              <div className="px-6">
+                <Image
+                  src={AllImages.defaultAvatar}
+                  alt="logo"
+                  className="w-10 h-10 object-cover rounded-full"
+                />
+              </div>
+            </div>
+          </div>
+        </Header>
+
+        <Layout>
+          {!isMobile ? (
             <Sider
               trigger={null}
               collapsible
@@ -112,122 +156,47 @@ const LayoutComponent = ({ children }) => {
                 minHeight: "100vh",
                 backgroundColor: "#f5f6f8",
               }}
+              className="border-t border-r py-2"
             >
-              <Button
-                type="text"
-                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                onClick={() => {
-                  if (isMobile) {
-                    toggleDrawer(); // Toggle Drawer on mobile
-                  } else {
-                    setCollapsed(!collapsed); // Toggle Sider on larger screens
-                  }
-                }}
-                className="bg-transparent"
-                style={{
-                  fontSize: "16px",
-                  textAlign: "right",
-                  width: 94,
-                  height: 64,
-                }}
-              />
-
               <Menu
                 mode="inline"
-                className=" mt-6 bg-[#f5f6f8]"
+                className=" bg-[#f5f6f8] border-r-0"
                 defaultSelectedKeys={["1"]}
                 items={items}
                 selectedKeys={[current]}
                 onClick={handleClick}
               />
             </Sider>
-          </>
-        ) : (
-          // On mobile, use Drawer instead of Sider
-          <Drawer
-            placement="left"
-            closable={false}
-            onClose={toggleDrawer}
-            visible={drawerVisible}
-            width={250} // Adjust width as needed
-            style={{
-              backgroundColor: "#f5f6f8",
-            }}
-          >
-            <Menu
-              mode="inline"
-              defaultSelectedKeys={["1"]}
-              items={items}
+          ) : (
+            <Drawer
+              placement="left"
+              closable={false}
+              onClose={toggleDrawer}
+              visible={drawerVisible}
+              width={250} // Adjust width as needed
               style={{
                 backgroundColor: "#f5f6f8",
               }}
-            />
-          </Drawer>
-        )}
+            >
+              <Menu
+                mode="inline"
+                defaultSelectedKeys={["1"]}
+                items={items}
+                style={{
+                  backgroundColor: "#f5f6f8",
+                }}
+              />
+            </Drawer>
+          )}
 
-        <Layout>
-          <Header
-            style={{
-              padding: 0,
-              background: colorBgContainer,
-            }}
-          >
-            {/* Custom Button for Desktop Trigger */}
-            {!isMobile ? (
-              <div className="flex items-center h-full ml-5 justify-between">
-                <Image src={AllImages.logoBlack} alt="logo" className="" />
-                <div className="px-6">
-                  <Image
-                    src={AllImages.defaultAvatar}
-                    alt="logo"
-                    className="w-10 h-10 object-cover rounded-full"
-                  />
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-center">
-                <Button
-                  type="text"
-                  icon={
-                    collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />
-                  }
-                  onClick={() => {
-                    if (isMobile) {
-                      toggleDrawer(); // Toggle Drawer on mobile
-                    } else {
-                      setCollapsed(!collapsed); // Toggle Sider on larger screens
-                    }
-                  }}
-                  style={{
-                    fontSize: "16px",
-                    width: 64,
-                    height: 64,
-                  }}
-                />
-                <div className="flex w-full justify-between items-center">
-                  <Image
-                    src={AllImages.logoBlack}
-                    alt="logo"
-                    className="w-20 lg:w-fit h-fit"
-                  />
-                  <div className="px-6">
-                    <Image
-                      src={AllImages.defaultAvatar}
-                      alt="logo"
-                      className="w-10 h-10 object-cover rounded-full"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-          </Header>
           <Content
+            className="border-t"
             style={{
-              margin: "24px 16px",
-              padding: 24,
+              // margin: "24px 16px",
+              padding: 40,
               minHeight: 280,
               background: colorBgContainer,
-              borderRadius: borderRadiusLG,
+              // borderRadius: borderRadiusLG,
             }}
           >
             {children}

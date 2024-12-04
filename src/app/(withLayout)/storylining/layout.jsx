@@ -1,9 +1,8 @@
 import { AllImages } from "@/assets/AllImages";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Layout, Space } from "antd";
+import { Dropdown, Space } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-const { Header, Content } = Layout;
 
 const LayoutComponent = ({ children }) => {
   const items = [

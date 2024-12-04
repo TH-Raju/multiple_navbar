@@ -3,10 +3,8 @@
 import MySectionTitle from "@/components/shared/common/my-section-title";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { KeyConstant } from "@/constants/key.constant";
-import { Layout } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-const { Header, Content } = Layout;
 
 const LayoutComponent = ({ children, params }) => {
   const searchParams = useSearchParams();
