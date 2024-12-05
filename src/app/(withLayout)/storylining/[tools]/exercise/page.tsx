@@ -12,7 +12,7 @@ import {
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { HeadlineAdvance } from "./components/headline-advance";
-import { HeadlineBeginner } from "./components/headline-beginner";
+import { BeginnerExercise } from "./components/headline-beginner";
 
 export default function ExercisePage({ params, searchParams }) {
   // const params = useSearchParams();
@@ -59,7 +59,7 @@ export default function ExercisePage({ params, searchParams }) {
         </p>
       </div>
 
-      {searchParams.tab === "beginner" && <HeadlineBeginner />}
+      {searchParams.tab === "beginner" && <BeginnerExercise />}
       {params.tools === "headline" && searchParams.tab === "advance" && (
         <HeadlineAdvance />
       )}

@@ -1,7 +1,7 @@
 import { AllImages } from "@/assets/AllImages";
 import Image from "next/image";
 
-export const HeadlineBeginner = () => {
+export const BeginnerExercise = () => {
   return (
     <div className="grid md:grid-cols-2 gap-4">
       <div className="border rounded-lg lg:h-[50vh]">
