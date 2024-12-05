@@ -2,10 +2,11 @@ import { MyLinkButton } from "@/components/shared/common/my-link-button";
 import MySectionTitle from "@/components/shared/common/my-section-title";
 
 import MySpacer from "@/components/shared/common/my-spacer";
+import StoryLiningLayoutComponent from "./storylining-layout";
 
 const FramingPage = () => {
   return (
-    <div>
+    <StoryLiningLayoutComponent>
       <MySectionTitle title={"Introduction"} className={"py-8"} />
 
       <p>
@@ -43,7 +44,7 @@ const FramingPage = () => {
       <MyLinkButton href={"/storylining/headline"} className="uppercase">
         Start here
       </MyLinkButton>
-    </div>
+    </StoryLiningLayoutComponent>
   );
 };
 

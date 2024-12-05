@@ -6,4 +6,5 @@ export const KeyConstant = {
   },
   MODAL: "modal",
   LESSON_ID: "lesson_id",
+  EXERCISE_ID: "exercise_id",
 };

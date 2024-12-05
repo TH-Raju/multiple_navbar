@@ -6,7 +6,7 @@ import { KeyConstant } from "@/constants/key.constant";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-const LayoutComponent = ({ children, params }) => {
+const ToolsLayoutComponent = ({ children, params }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -39,8 +39,6 @@ const LayoutComponent = ({ children, params }) => {
       router.replace(`${pathname}?${currentParams.toString()}`);
     }
   }, []);
-
-  console.log(tab);
 
   return (
     <>
@@ -88,4 +86,4 @@ const LayoutComponent = ({ children, params }) => {
   );
 };
 
-export default LayoutComponent;
+export default ToolsLayoutComponent;

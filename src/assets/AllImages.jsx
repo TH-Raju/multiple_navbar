@@ -1,8 +1,10 @@
+import chartImage from "./chart-image.png";
 import framing from "./framing.png";
 import aiIcon from "./icons/ai.png";
 import classIcon from "./icons/class.png";
 import frameIcon from "./icons/framing.png";
 import googleIcon from "./icons/googleIcon.png";
+import lightIcon from "./icons/light.png";
 import linkedinIcon from "./icons/linkedinIcon.png";
 import optionIcon from "./icons/option.png";
 import pathIcon from "./icons/path.png";
@@ -31,4 +33,6 @@ export const AllImages = {
   videoIcon,
   videoThumb,
   storyliningIcon,
+  lightIcon,
+  chartImage,
 };

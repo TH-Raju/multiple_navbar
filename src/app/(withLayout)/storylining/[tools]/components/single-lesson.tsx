@@ -3,6 +3,12 @@ import { AllImages } from "@/assets/AllImages";
 import MyButton from "@/components/shared/common/my-button";
 import MySectionTitle from "@/components/shared/common/my-section-title";
 import { ILesson } from "@/components/shared/lesson-card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { KeyConstant } from "@/constants/key.constant";
 import {
   Captions,
@@ -70,6 +76,9 @@ export const SingleLesson = () => {
   const idx = lessons.findIndex((item) => item.id === lessonId);
   const lesson = idx !== -1 ? { idx: idx + 1, ...lessons[idx] } : undefined;
 
+  if (lessonId && idx < 0) {
+    router.replace("/404");
+  }
   return (
     <>
       {isModalOpen === "true" && (
@@ -100,13 +109,16 @@ export const SingleLesson = () => {
                   } grid-cols-5 gap-3 transition-all duration-1000 overflow-hidden`}
                 >
                   <div className="col-span-4">
-                    {lesson.videoUrl && (
+                    {/* VIDEO  */}
+                    {lesson?.videoUrl && (
                       <video
                         src={lesson.videoUrl}
                         controls
                         className="rounded-lg w-full md:h-[70vh] bg-black"
+                        autoPlay
                       ></video>
                     )}
+                    {/* LESSON DETAILS  */}
                     <div>
                       <div className="lg:flex items-center justify-between">
                         <h1 className="text-xl md:text-2xl font-semibold py-3">
@@ -126,9 +138,31 @@ export const SingleLesson = () => {
                         )}
                       </div>
                       <p>{lesson.content}</p>
+
+                      {/* TRASNCRIPT FOR MOBILE  */}
+                      {isMobile && (
+                        <Accordion
+                          type="single"
+                          collapsible
+                          className="bg-gray-100 px-4 rounded-lg mt-6"
+                        >
+                          <AccordionItem
+                            value="item-1"
+                            className="py-0 border-none"
+                          >
+                            <AccordionTrigger className="text-xl hover:no-underline py-3">
+                              Transcript
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              {lesson.content}
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      )}
                     </div>
                   </div>
 
+                  {/* TRANSCRIPT  */}
                   {isTrasncript && (
                     <div className="col-span-1 bg-gray-100 py-3 px-5 rounded-lg">
                       <div className="flex items-center justify-between">
@@ -160,12 +194,38 @@ export const SingleLesson = () => {
                     Marked as complete!
                   </MyButton>
 
-                  <div>
-                    <MyButton onClick={() => {}} variant="ghost">
+                  <div className="space-x-2">
+                    <MyButton
+                      onClick={() => {
+                        const params = new URLSearchParams(
+                          searchParams.toString()
+                        );
+                        const existingLesson = params.get(
+                          KeyConstant.LESSON_ID
+                        );
+                        const newLesson = Number(existingLesson) - 1;
+
+                        params.set(KeyConstant.LESSON_ID, newLesson.toString()),
+                          router.push(`?${params.toString()}`);
+                      }}
+                      variant="ghost"
+                      disabled={idx < 1}
+                    >
                       Back
                     </MyButton>
                     <MyButton
-                      onClick={() => {}}
+                      onClick={() => {
+                        const params = new URLSearchParams(
+                          searchParams.toString()
+                        );
+                        const existingLesson = params.get(
+                          KeyConstant.LESSON_ID
+                        );
+                        const newLesson = Number(existingLesson) + 1;
+
+                        params.set(KeyConstant.LESSON_ID, newLesson.toString()),
+                          router.push(`?${params.toString()}`);
+                      }}
                       variant="outline"
                       endIcon={<CornerUpRight />}
                     >

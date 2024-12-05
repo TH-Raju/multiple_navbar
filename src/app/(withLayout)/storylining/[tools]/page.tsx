@@ -3,7 +3,9 @@ import MySpacer from "@/components/shared/common/my-spacer";
 import MyTitleWithDivider from "@/components/shared/common/my-title-with-divider";
 import { ExerciseCard, IExercise } from "@/components/shared/exercise-card";
 import { ILesson, LessonCard } from "@/components/shared/lesson-card";
+import StoryLiningLayoutComponent from "../storylining-layout";
 import { SingleLesson } from "./components/single-lesson";
+import ToolsLayoutComponent from "./tools-layout";
 
 export interface ILessonSearchParams {
   tab: string;
@@ -67,19 +69,19 @@ const exercises: IExercise[] = [
     label: "Introduction to Storylining",
   },
   {
-    id: "1",
+    id: "2",
     label: "Introduction to Storylining",
   },
   {
-    id: "1",
+    id: "3",
     label: "Introduction to Storylining",
   },
   {
-    id: "1",
+    id: "4",
     label: "Introduction to Storylining",
   },
   {
-    id: "1",
+    id: "5",
     label: "Introduction to Storylining",
   },
   {
@@ -92,34 +94,38 @@ const exercises: IExercise[] = [
   },
 ];
 export default function StoryliningToolsPage({
+  params,
   searchParams,
 }: {
+  params: string;
   searchParams: ILessonSearchParams;
 }) {
   return (
-    <div className="">
-      <MyTitleWithDivider title="Lessons" />
-      <div
-        className="overflow-x-auto 
+    <StoryLiningLayoutComponent>
+      <ToolsLayoutComponent params={params}>
+        <MyTitleWithDivider title="Lessons" />
+        <div
+          className="overflow-x-auto 
         "
-      >
-        <div className="flex gap-5 py-1">
-          {lessons.map((item) => (
-            <LessonCard key={item.id} item={item} />
+        >
+          <div className="flex gap-5 py-1">
+            {lessons.map((item) => (
+              <LessonCard key={item.id} item={item} />
+            ))}
+          </div>
+        </div>
+
+        <MySpacer className="h-6" />
+
+        <MyTitleWithDivider title="Exercises" />
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {exercises.map((item) => (
+            <ExerciseCard key={item.id} item={item} />
           ))}
         </div>
-      </div>
 
-      <MySpacer className="h-6" />
-
-      <MyTitleWithDivider title="Exercises" />
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {exercises.map((item) => (
-          <ExerciseCard key={item.id} item={item} />
-        ))}
-      </div>
-
-      <SingleLesson />
-    </div>
+        <SingleLesson />
+      </ToolsLayoutComponent>
+    </StoryLiningLayoutComponent>
   );
 }

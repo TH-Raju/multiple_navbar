@@ -190,10 +190,10 @@ const LayoutComponent = ({ children }) => {
           )}
 
           <Content
-            className="border-t"
+            className="border-t p-5 md:p-7 lg:p-10"
             style={{
               // margin: "24px 16px",
-              padding: 40,
+              // padding: 40,
               minHeight: 280,
               background: colorBgContainer,
               // borderRadius: borderRadiusLG,

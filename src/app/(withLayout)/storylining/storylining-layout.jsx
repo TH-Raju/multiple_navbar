@@ -1,10 +1,11 @@
+"use client";
 import { AllImages } from "@/assets/AllImages";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 
-const LayoutComponent = ({ children }) => {
+const StoryLiningLayoutComponent = ({ children }) => {
   const items = [
     {
       label: (
@@ -53,7 +54,7 @@ const LayoutComponent = ({ children }) => {
           </div>
           <div className="w-full flex gap-6 items-center justify-center">
             <Link
-              href={"/framing"}
+              href={"/storylining"}
               className="text-gray-500 font-medium hover:bg-gray-50 rounded-md p-2"
             >
               Overview
@@ -76,4 +77,4 @@ const LayoutComponent = ({ children }) => {
   );
 };
 
-export default LayoutComponent;
+export default StoryLiningLayoutComponent;
