@@ -1,5 +1,4 @@
 "use client";
-import { useState, useEffect } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -8,6 +7,7 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
+import { useEffect, useState } from "react";
 const { Header, Sider, Content } = Layout;
 
 const Sidebar = ({ children }) => {
@@ -50,7 +50,7 @@ const Sidebar = ({ children }) => {
       >
         <div className="demo-logo-vertical" />
         <Menu
-          theme="dark"
+          // theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
           className="mt-10"

@@ -13,7 +13,20 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { HeadlineAdvance } from "./components/headline-advance";
 import { BeginnerExercise } from "./components/headline-beginner";
+import { HLAdvanceExercise } from "./components/hl-advance";
+import { HLBeginnerExercise } from "./components/hl-beginner";
+import { HLIntermediateExercise } from "./components/hl-intermediate";
 
+const exerciseData = [
+  {
+    id: "1",
+    optionsType: "a",
+  },
+  {
+    id: "2",
+    optionsType: "b",
+  },
+];
 export default function ExercisePage({ params, searchParams }) {
   // const params = useSearchParams();
 
@@ -24,6 +37,10 @@ export default function ExercisePage({ params, searchParams }) {
     searchParams.tab,
     `Exercise  ${searchParams.exercise_id}`,
   ];
+
+  const exercise = exerciseData.find(
+    (item) => item.id === searchParams.exercise_id
+  );
 
   return (
     <div>
@@ -43,7 +60,7 @@ export default function ExercisePage({ params, searchParams }) {
         </Breadcrumb>
       </div>
       <div className="py-3 space-y-2">
-        <div className="bg-gray-100 p-2 uppercase font-semibold text-sm rounded-md flex items-center justify-between ">
+        <div className="bg-gray-200 p-2 uppercase font-semibold text-sm rounded-md flex items-center justify-between ">
           <p>Instructions</p>
           <MyButton
             onClick={() => {}}
@@ -59,9 +76,23 @@ export default function ExercisePage({ params, searchParams }) {
         </p>
       </div>
 
-      {searchParams.tab === "beginner" && <BeginnerExercise />}
-      {params.tools === "headline" && searchParams.tab === "advance" && (
-        <HeadlineAdvance />
+      {params.tools === "horizontal-logic" ? (
+        <div>
+          {searchParams.tab === "beginner" && <HLBeginnerExercise />}
+          {searchParams.tab === "intermediate" && <HLIntermediateExercise />}
+          {searchParams.tab === "advance" && <HLAdvanceExercise />}
+        </div>
+      ) : (
+        <>
+          {(searchParams.tab === "beginner" ||
+            searchParams.tab === "intermediate") && (
+            <BeginnerExercise data={exercise} />
+          )}
+
+          {searchParams.tab === "advance" && (
+            <HeadlineAdvance data={exercise} params={params} />
+          )}
+        </>
       )}
 
       <div className="py-3 space-y-2">

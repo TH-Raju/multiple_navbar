@@ -9,7 +9,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`font-mulish antialiased`}>
+      <style>
+        @import
+        url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+      </style>
+      <body className={`antialiased`}>
         <AntdRegistry>{children}</AntdRegistry>
       </body>
     </html>
