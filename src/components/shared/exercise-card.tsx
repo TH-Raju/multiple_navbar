@@ -18,7 +18,7 @@ export const ExerciseCard = ({ item }: { item: IExercise }) => {
       <div className="flex items-center gap-2 text-gray-700">
         <BookOpen size={22} className="text-gray-700" />
 
-        <p className="font-medium text-sm md:text-base">{item.label}</p>
+        <p className="font-semibold text-sm md:text-base">{item.label}</p>
       </div>
 
       <MyButton

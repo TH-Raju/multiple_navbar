@@ -21,7 +21,7 @@ const ToolsLayoutComponent = ({ children, params }) => {
     {
       title: "Intermediate",
       value: "intermediate",
-      visibility: params.tools === "vertical-logic" ? false : true,
+      visibility: params.tools === "horizontal-logic" ? true : false,
     },
     {
       title: "Advance",

@@ -30,7 +30,6 @@ export const AllImages = {
   aiIcon,
   defaultAvatar,
   framing,
-  videoIcon,
   videoThumb,
   storyliningIcon,
   lightIcon,
