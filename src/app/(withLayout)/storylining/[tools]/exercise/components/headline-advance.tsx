@@ -1,15 +1,5 @@
 "use client";
 import { AllImages } from "@/assets/AllImages";
-import MyButton from "@/components/shared/common/my-button";
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { ChevronsUpDown, X } from "lucide-react";
 import Image from "next/image";
 
 export const HeadlineAdvanceExercise = ({ data, params }) => {
@@ -37,35 +27,36 @@ export const HeadlineAdvanceExercise = ({ data, params }) => {
           </div>
         </div>
 
-        {data?.optionsType === "a" && (
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="border rounded-lg lg:h-[50vh]">
-              <Image
-                src={AllImages.chartImage}
-                alt="light-icon"
-                className="w-full rounded-lg h-full object-contain"
-              />
-            </div>
-
-            <div className="">
-              <div className="bg-gray-100 p-2 uppercase font-semibold text-sm rounded-md flex items-center justify-between mb-2">
-                <p>HEADLINE</p>
-              </div>
-              {[1].map((item) => (
-                <div key={item}>
-                  <div className="flex gap-2 p-3 border rounded-lg items-center hover:cursor-pointer hover:bg-gray-50 h-full">
-                    {/* <p className="px-2 font-semibold">{item}</p> */}
-                    <p className="leading-tight">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Amet, vitae?
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+        {/* {data?.optionsType === "a" && ( */}
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="border rounded-lg lg:h-[50vh]">
+            <Image
+              src={AllImages.chartImage}
+              alt="light-icon"
+              className="w-full rounded-lg h-full object-contain"
+            />
           </div>
-        )}
-        {data.optionsType === "b" && (
+
+          <div className="">
+            <div className="bg-gray-100 p-2 uppercase font-semibold text-sm rounded-md flex items-center justify-between mb-2">
+              <p>HEADLINE</p>
+            </div>
+            {[1].map((item) => (
+              <div key={item}>
+                <div className="flex gap-2 p-3 border rounded-lg items-center hover:cursor-pointer hover:bg-gray-50 h-full">
+                  {/* <p className="px-2 font-semibold">{item}</p> */}
+                  <p className="leading-tight">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Amet, vitae?
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* )} */}
+
+        {/* {data.optionsType === "b" && (
           <div>
             <div className="py-3 space-y-2">
               <div className="bg-gray-100 p-2 uppercase font-semibold text-sm rounded-md flex items-center justify-between ">
@@ -76,7 +67,6 @@ export const HeadlineAdvanceExercise = ({ data, params }) => {
                 headline best practices
               </p>
             </div>
-            {/* <div className="grid md:grid-cols-2 gap-4"> */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-5">
               {[1, 2, 3, 4].map((item, index) => (
                 <div key={item} className="space-y-2">
@@ -97,7 +87,7 @@ export const HeadlineAdvanceExercise = ({ data, params }) => {
                       </AlertDialogDescription>
                     </AlertDialogContent>
 
-                    <div className="border rounded-lg ">
+                    <div className="border rounded-lg relative">
                       <AlertDialogTrigger>
                         <Image
                           src={AllImages.chartImage}
@@ -122,7 +112,7 @@ export const HeadlineAdvanceExercise = ({ data, params }) => {
               ))}
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -156,11 +156,11 @@ const LayoutComponent = ({ children }) => {
                 minHeight: "100vh",
                 backgroundColor: "#f5f6f8",
               }}
-              className="border-t border-r py-2"
+              className="border-t border-r py-2 font-mulish"
             >
               <Menu
                 mode="inline"
-                className=" bg-[#f5f6f8] border-r-0"
+                className=" bg-[#f5f6f8] border-r-0 font-mulish"
                 defaultSelectedKeys={["1"]}
                 items={items}
                 selectedKeys={[current]}
@@ -182,15 +182,13 @@ const LayoutComponent = ({ children }) => {
                 mode="inline"
                 defaultSelectedKeys={["1"]}
                 items={items}
-                style={{
-                  backgroundColor: "#f5f6f8",
-                }}
+                className="font-mulish border-none bg-[#f5f6f8]"
               />
             </Drawer>
           )}
 
           <Content
-            className="border-t p-5 md:p-7 lg:p-10 bg-[#fafafa]"
+            className="border-t p-5 md:p-7 lg:p-10 bg-[#fafafa] font-mulish"
             style={{
               // margin: "24px 16px",
               // padding: 40,
