@@ -55,14 +55,14 @@ const StoryLiningLayoutComponent = ({ children }) => {
           <div className="w-full flex gap-6 items-center justify-center">
             <Link
               href={"/storylining"}
-              className="text-gray-500 font-medium hover:bg-gray-50 rounded-md p-2"
+              className="text-gray-500 font-bold hover:bg-gray-50 rounded-md p-2"
             >
               Overview
             </Link>
 
             <Dropdown menu={{ items }}>
               <div className="hover:bg-gray-50 rounded-md p-2">
-                <Space className="text-gray-500 font-medium hover:cursor-pointer">
+                <Space className="text-gray-500 font-bold hover:cursor-pointer">
                   Tools
                   <DownOutlined size={14} />
                 </Space>
