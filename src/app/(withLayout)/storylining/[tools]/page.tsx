@@ -1,8 +1,10 @@
+"use client";
 import { AllImages } from "@/assets/AllImages";
 import MySpacer from "@/components/shared/common/my-spacer";
 import MyTitleWithDivider from "@/components/shared/common/my-title-with-divider";
 import { ExerciseCard, IExercise } from "@/components/shared/exercise-card";
 import { ILesson, LessonCard } from "@/components/shared/lesson-card";
+import { useGetToolContentQuery } from "@/redux/feature/storylingin-api";
 import StoryLiningLayoutComponent from "../storylining-layout";
 import { SingleLesson } from "./components/single-lesson";
 import ToolsLayoutComponent from "./tools-layout";
@@ -97,9 +99,13 @@ export default function StoryliningToolsPage({
   params,
   searchParams,
 }: {
-  params: string;
+  params: { tools: string };
   searchParams: ILessonSearchParams;
 }) {
+  const { data, isLoading } = useGetToolContentQuery(params.tools);
+  console.log("data:", data);
+  console.log("loading:", isLoading);
+
   return (
     <StoryLiningLayoutComponent>
       <ToolsLayoutComponent params={params}>

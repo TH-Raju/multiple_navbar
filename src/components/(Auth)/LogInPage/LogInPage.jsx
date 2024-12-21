@@ -1,14 +1,24 @@
 "use client";
-import { Form, Input, Button, Checkbox, Typography } from "antd"; // Import necessary components
+import { Button, Checkbox, Form, Input, message, Typography } from "antd"; // Import necessary components
 
+import { AllImages } from "@/assets/AllImages";
+import { useLogInMutation } from "@/redux/feature/auth/authApi";
+import Image from "next/image";
 import Link from "next/link";
 import GoogleLinkedInLogin from "./GoogleLinkedInLogin";
-import Image from "next/image";
-import { AllImages } from "@/assets/AllImages";
 
 const LogInPage = () => {
+  const [logIn, { isLoading }] = useLogInMutation();
+
   const onFinish = (values) => {
     console.log("Success:", values);
+    const finalData = {
+      email: values?.email,
+      password: values?.password,
+    };
+    logIn(finalData).catch((error) => {
+      message.error(error?.data?.message || "Login failed");
+    });
   };
 
   return (

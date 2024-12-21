@@ -41,7 +41,10 @@ const FramingPage = () => {
       </p>
 
       <MySpacer className="h-6" />
-      <MyLinkButton href={"/storylining/headline"} className="uppercase">
+      <MyLinkButton
+        href={"/storylining/headline?toolId=65f81884ea44df0751d0a15b"}
+        className="uppercase"
+      >
         Start here
       </MyLinkButton>
     </StoryLiningLayoutComponent>

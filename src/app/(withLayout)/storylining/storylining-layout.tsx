@@ -11,7 +11,7 @@ const StoryLiningLayoutComponent = ({ children }) => {
       label: (
         <Link
           rel="noopener noreferrer"
-          href="/storylining/headline"
+          href={`/storylining/65f81884ea44df0751d0a15b`}
           className="text-gray-500 font-medium"
         >
           Headline
@@ -23,7 +23,7 @@ const StoryLiningLayoutComponent = ({ children }) => {
       label: (
         <Link
           rel="noopener noreferrer"
-          href="/storylining/horizontal-logic"
+          href="/storylining/649c678b30192b94e7f1b25b"
           className="text-gray-500 font-medium"
         >
           Horizontal Logic
@@ -35,7 +35,7 @@ const StoryLiningLayoutComponent = ({ children }) => {
       label: (
         <Link
           rel="noopener noreferrer"
-          href="/storylining/vertical-logic"
+          href="/storylining/65f8187bea44df0751d0a154"
           className="text-gray-500 font-medium"
         >
           Vertical Logic

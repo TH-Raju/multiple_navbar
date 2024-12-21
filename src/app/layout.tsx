@@ -1,3 +1,4 @@
+import ReduxProviders from "@/redux/ReduxProvider";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Mulish } from "next/font/google";
 import "./globals.css";
@@ -20,7 +21,9 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${mulish.className} antialiased`}>
-        <AntdRegistry>{children}</AntdRegistry>
+        <AntdRegistry>
+          <ReduxProviders>{children}</ReduxProviders>
+        </AntdRegistry>
       </body>
     </html>
   );

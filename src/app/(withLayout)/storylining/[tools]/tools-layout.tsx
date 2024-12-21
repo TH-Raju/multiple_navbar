@@ -2,6 +2,7 @@
 
 import MySectionTitle from "@/components/shared/common/my-section-title";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DataConstant } from "@/constants/data.constant";
 import { KeyConstant } from "@/constants/key.constant";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
@@ -21,7 +22,8 @@ const ToolsLayoutComponent = ({ children, params }) => {
     {
       title: "Intermediate",
       value: "intermediate",
-      visibility: params.tools === "horizontal-logic" ? true : false,
+      visibility:
+        params.tools === DataConstant.HORIZONTAL_LOGIC_TOOL_ID ? true : false,
     },
     {
       title: "Advance",
@@ -47,7 +49,9 @@ const ToolsLayoutComponent = ({ children, params }) => {
           <div className="lg:absolute left-0 top-1 flex items-center justify-center gap-2">
             <p className="font-medium text-xl">TOOL</p>
             <MySectionTitle
-              title={`${params.tools}`.split("-").join(" ").toUpperCase()}
+              title={
+                DataConstant.TOOLS.find((it) => it.id === params.tools).name
+              }
               className="text-center p-2 bg-gray-100 rounded-md"
             />
           </div>
