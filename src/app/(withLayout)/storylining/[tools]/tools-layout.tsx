@@ -4,30 +4,37 @@ import MySectionTitle from "@/components/shared/common/my-section-title";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DataConstant } from "@/constants/data.constant";
 import { KeyConstant } from "@/constants/key.constant";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useEffect } from "react";
 
-const ToolsLayoutComponent = ({ children, params }) => {
+const ToolsLayoutComponent = ({ children }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const params = useParams();
+  const toolsId = params.tools;
 
   const tab = searchParams.get(KeyConstant.TAB);
   const tabList = [
     {
       title: "Beginner",
-      value: "beginner",
+      value: "EASY",
       visibility: true,
     },
     {
       title: "Intermediate",
-      value: "intermediate",
+      value: "INTERMEDIATE",
       visibility:
-        params.tools === DataConstant.HORIZONTAL_LOGIC_TOOL_ID ? true : false,
+        toolsId === DataConstant.HORIZONTAL_LOGIC_TOOL_ID ? true : false,
     },
     {
       title: "Advance",
-      value: "advance",
+      value: "ADVANCED",
       visibility: true,
     },
   ];
@@ -35,7 +42,7 @@ const ToolsLayoutComponent = ({ children, params }) => {
   useEffect(() => {
     if (tab === null || tab === "") {
       const currentParams = new URLSearchParams(searchParams);
-      currentParams.set(KeyConstant.TAB, "beginner");
+      currentParams.set(KeyConstant.TAB, "EASY");
 
       // Update the URL without reloading the page
       router.replace(`${pathname}?${currentParams.toString()}`);
@@ -49,15 +56,13 @@ const ToolsLayoutComponent = ({ children, params }) => {
           <div className="lg:absolute left-0 top-1 flex items-center justify-center gap-2">
             <p className="font-medium text-xl">TOOL</p>
             <MySectionTitle
-              title={
-                DataConstant.TOOLS.find((it) => it.id === params.tools).name
-              }
+              title={DataConstant.TOOLS.find((it) => it.id === toolsId)?.name}
               className="text-center p-2 bg-gray-100 rounded-md"
             />
           </div>
           <div className="w-full flex justify-center">
             <div>
-              <Tabs defaultValue={tab || "beginner"} className="">
+              <Tabs defaultValue={tab || "EASY"} className="">
                 <TabsList>
                   {tabList
                     .filter((it) => it.visibility)

@@ -1,8 +1,7 @@
 "use client";
-import { AllImages } from "@/assets/AllImages";
 import MyButton from "@/components/shared/common/my-button";
+import { MyLoading } from "@/components/shared/common/my-loading";
 import MySectionTitle from "@/components/shared/common/my-section-title";
-import { ILesson } from "@/components/shared/lesson-card";
 import {
   Accordion,
   AccordionContent,
@@ -10,47 +9,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { KeyConstant } from "@/constants/key.constant";
-import {
-  Captions,
-  CheckCircle,
-  ChevronsRight,
-  CornerUpRight,
-  X,
-} from "lucide-react";
+import { useGetSLSingleContentQuery } from "@/redux/feature/tools/storylining/storylining-api";
+import parse from "html-react-parser";
+import { Captions, CheckCircle, ChevronsRight, X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-
-const lessons: ILesson[] = [
-  {
-    id: "1",
-    label: "Introduction to Storylining",
-    lessonType: "video",
-    thumbnail: AllImages.videoThumb,
-    videoUrl:
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem voluptates pariatur perferendis assumenda quos est, consectetur dolorem nobis possimus temporibus? Temporibus minima corporis saepe consectetur magni cum omnis, cupiditate numquam dolores architecto quam voluptate alias ad tempora, sed cumque repudiandae, accusantium mollitia fugiat ipsam deleniti libero modi atque! Aliquid, illo architecto. Rerum ipsum cumque, distinctio aut nulla eius nisi sunt possimus illum, excepturi perspiciatis tenetur nihil sed nemo, exercitationem quaerat ab facere minima atque mollitia ducimus laboriosam? Iste praesentium esse expedita quidem ducimus, corporis aliquid, minus quibusdam doloremque rerum quae. Quibusdam iusto obcaecati ut excepturi dicta quo officiis quidem dignissimos laboriosam vitae accusamus sit quasi nisi tenetur in sunt, a atque doloremque at quos! Maiores animi ratione aliquid dolore accusantium quasi quidem, laboriosam est mollitia asperiores hic nostrum exercitationem deserunt, minus repellat similique voluptas dolorem, blanditiis delectus unde quas! Non sequi fugiat possimus vel dignissimos, vero maiores eius provident, perferendis ad corrupti consequuntur culpa quos consequatur praesentium alias modi nulla nemo dolore quis repellendus. Pariatur debitis, minima labore libero eaque nihil consequuntur ipsa explicabo voluptates similique architecto blanditiis quisquam officiis necessitatibus repellendus id! Incidunt laudantium explicabo reiciendis dolores vitae provident facere alias illum, dolore ut non a eaque, quam reprehenderit!",
-  },
-  {
-    id: "2",
-    label: "Introduction to Storylining",
-    lessonType: "docs",
-    thumbnail: AllImages.videoThumb,
-    videoUrl: "",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam autem nostrum voluptas eligendi harum delectus voluptates totam, nam deserunt laudantium!",
-  },
-  {
-    id: "3",
-    label: " Introduction to Storylining",
-    lessonType: "video",
-    thumbnail: AllImages.videoThumb,
-    videoUrl:
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem voluptates pariatur perferendis assumenda quos est, consectetur dolorem nobis possimus temporibus? Temporibus minima corporis saepe consectetur magni cum omnis, cupiditate numquam dolores architecto quam voluptate alias ad tempora, sed cumque repudiandae, accusantium mollitia fugiat ipsam deleniti libero modi atque! Aliquid, illo architecto. Rerum ipsum cumque, distinctio aut nulla eius nisi sunt possimus illum, excepturi perspiciatis tenetur nihil sed nemo, exercitationem quaerat ab facere minima atque mollitia ducimus laboriosam? Iste praesentium esse expedita quidem ducimus, corporis aliquid, minus quibusdam doloremque rerum quae. Quibusdam iusto obcaecati ut excepturi dicta quo officiis quidem dignissimos laboriosam vitae accusamus sit quasi nisi tenetur in sunt, a atque doloremque at quos! Maiores animi ratione aliquid dolore accusantium quasi quidem, laboriosam est mollitia asperiores hic nostrum exercitationem deserunt, minus repellat similique voluptas dolorem, blanditiis delectus unde quas! Non sequi fugiat possimus vel dignissimos, vero maiores eius provident, perferendis ad corrupti consequuntur culpa quos consequatur praesentium alias modi nulla nemo dolore quis repellendus. Pariatur debitis, minima labore libero eaque nihil consequuntur ipsa explicabo voluptates similique architecto blanditiis quisquam officiis necessitatibus repellendus id! Incidunt laudantium explicabo reiciendis dolores vitae provident facere alias illum, dolore ut non a eaque, quam reprehenderit!",
-  },
-];
 
 export const SingleLesson = () => {
   const searchParams = useSearchParams();
@@ -59,8 +22,9 @@ export const SingleLesson = () => {
   const isModalOpen = searchParams.get(KeyConstant.MODAL);
   const lessonId = searchParams.get(KeyConstant.LESSON_ID);
   const [isMobile, setIsMobile] = useState(false);
-  const [isTrasncript, setTranscript] = useState(true);
+  const [isTranscript, setTranscript] = useState(true);
 
+  const { data, isLoading } = useGetSLSingleContentQuery(lessonId);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024); // Change 768 to your desired breakpoint
@@ -73,12 +37,16 @@ export const SingleLesson = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const idx = lessons.findIndex((item) => item.id === lessonId);
-  const lesson = idx !== -1 ? { idx: idx + 1, ...lessons[idx] } : undefined;
+  // const idx = lessons.findIndex((item) => item.id === lessonId);
+  // const lesson = idx !== -1 ? { idx: idx + 1, ...lessons[idx] } : undefined;
+  const lesson = data?.data.contents[0];
 
-  if (lessonId && idx < 0) {
-    router.replace("/404");
+  if (isLoading) {
+    return <MyLoading />;
   }
+  // if (!lessonId) {
+  //   return notFound();
+  // }
   return (
     <>
       {isModalOpen === "true" && (
@@ -105,14 +73,14 @@ export const SingleLesson = () => {
               <div className="space-y-2 overflow-y-scroll flex-1 p-5 pt-0">
                 <div
                   className={`${
-                    isTrasncript ? "grid" : ""
+                    isTranscript ? "grid" : ""
                   } grid-cols-5 gap-3 transition-all duration-1000 overflow-hidden`}
                 >
                   <div className="col-span-4">
                     {/* VIDEO  */}
-                    {lesson?.videoUrl && (
+                    {lesson?.url && (
                       <video
-                        src={lesson.videoUrl}
+                        src={lesson.url}
                         controls
                         className="rounded-lg w-full md:h-[70vh] bg-black"
                         autoPlay
@@ -122,9 +90,9 @@ export const SingleLesson = () => {
                     <div>
                       <div className="lg:flex items-center justify-between">
                         <h1 className="text-xl md:text-2xl font-semibold py-3">
-                          Lesson {lesson.idx}: {lesson.label}
+                          Lesson: {lesson?.title}
                         </h1>
-                        {!isTrasncript && (
+                        {!isTranscript && (
                           <MyButton
                             startIcon={<Captions />}
                             variant="outline"
@@ -137,7 +105,7 @@ export const SingleLesson = () => {
                           </MyButton>
                         )}
                       </div>
-                      <p>{lesson.content}</p>
+                      {lesson?.text && <div>{parse(`${lesson?.text}`)}</div>}
 
                       {/* TRASNCRIPT FOR MOBILE  */}
                       {isMobile && (
@@ -154,7 +122,7 @@ export const SingleLesson = () => {
                               Transcript
                             </AccordionTrigger>
                             <AccordionContent>
-                              {lesson.content}
+                              {lesson?.content}
                             </AccordionContent>
                           </AccordionItem>
                         </Accordion>
@@ -163,7 +131,7 @@ export const SingleLesson = () => {
                   </div>
 
                   {/* TRANSCRIPT  */}
-                  {isTrasncript && (
+                  {isTranscript && (
                     <div className="col-span-1 bg-gray-100 py-3 px-5 rounded-lg">
                       <div className="flex items-center justify-between">
                         <MySectionTitle title="Transcript" />
@@ -177,7 +145,7 @@ export const SingleLesson = () => {
                           <ChevronsRight />
                         </MyButton>
                       </div>
-                      <p className="pt-2">{lesson.content}</p>
+                      <p className="pt-2">{lesson?.short_desc}</p>
                     </div>
                   )}
                 </div>
@@ -194,7 +162,7 @@ export const SingleLesson = () => {
                     Marked as complete!
                   </MyButton>
 
-                  <div className="space-x-2">
+                  {/* <div className="space-x-2">
                     <MyButton
                       onClick={() => {
                         const params = new URLSearchParams(
@@ -209,7 +177,7 @@ export const SingleLesson = () => {
                           router.push(`?${params.toString()}`);
                       }}
                       variant="ghost"
-                      disabled={idx < 1}
+                      // disabled={idx < 1}
                     >
                       Back
                     </MyButton>
@@ -231,7 +199,7 @@ export const SingleLesson = () => {
                     >
                       Next
                     </MyButton>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

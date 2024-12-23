@@ -1,16 +1,25 @@
 "use client";
-import { Form, Input, Button, Checkbox, Typography } from "antd"; // Import necessary components
-import { UserAddOutlined } from "@ant-design/icons";
+import { MyLoading } from "@/components/shared/common/my-loading";
+import { useLoggedInUserQuery } from "@/redux/feature/auth/authApi";
+import { Button, Checkbox, Form, Input, Typography } from "antd"; // Import necessary components
+import Link from "next/link";
+import GoogleLinkedin from "./GoogleLinkedin";
 import LogoPart from "./LogoPart";
 import PotentialPar from "./PotentialPar";
-import GoogleLinkedin from "./GoogleLinkedin";
-import Link from "next/link";
 
 const SignUpPage = () => {
+  const { data, isLoading: isLoadingUser } = useLoggedInUserQuery();
+
   const onFinish = (values) => {
     console.log("Success:", values);
   };
 
+  if (isLoadingUser) {
+    return <MyLoading />;
+  }
+  if (data?.code === StatusCode.OK) {
+    router.push("/overview");
+  }
   return (
     <div className="">
       <div className="flex md:flex-row flex-col ">

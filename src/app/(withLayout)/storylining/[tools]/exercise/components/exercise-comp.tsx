@@ -2,15 +2,18 @@
 
 import { AllImages } from "@/assets/AllImages";
 import MyButton from "@/components/shared/common/my-button";
-import MySpacer from "@/components/shared/common/my-spacer";
+import { MyLoading } from "@/components/shared/common/my-loading";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { DataConstant } from "@/constants/data.constant";
+import { KeyConstant } from "@/constants/key.constant";
+import { useGetSLSingleContentQuery } from "@/redux/feature/tools/storylining/storylining-api";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { HeadlineAdvanceExercise } from "./headline-advance";
 import { HeadlineBeginnerExercise } from "./headline-beginner";
 import { HLAdvanceExercise } from "./hl-advance";
@@ -29,21 +32,25 @@ const exerciseData = [
     optionsType: "b",
   },
 ];
-export function Exercise({ params, searchParams }) {
-  // const params = useSearchParams();
-
+export function Exercise() {
+  const searchParams = useSearchParams();
   const pathName = usePathname();
+  const params = useParams();
+
+  const tab = searchParams.get(KeyConstant.TAB);
+  const exerciseId = searchParams.get(KeyConstant.EXERCISE_ID);
+  const { data, isLoading } = useGetSLSingleContentQuery(exerciseId);
 
   const breadcrumb = [
     ...pathName.split("-").join(" ").split("/").slice(1, -1),
-    searchParams.tab,
-    `Exercise  ${searchParams.exercise_id}`,
+    tab,
+    `Exercise  ${searchParams.get(KeyConstant.EXERCISE_ID)}`,
   ];
 
-  const exercise = exerciseData.find(
-    (item) => item.id === searchParams.exercise_id
-  );
-
+  const exercise = data?.data.contents[0];
+  if (isLoading) {
+    return <MyLoading />;
+  }
   return (
     <div>
       <div>
@@ -78,37 +85,31 @@ export function Exercise({ params, searchParams }) {
         </p> */}
       </div>
 
-      {params.tools === "headline" && (
+      {params.tools === DataConstant.HEADLINE_TOOL_ID && (
         <div>
-          {searchParams.tab === "beginner" && (
-            <HeadlineBeginnerExercise data={exercise} />
-          )}
+          {tab === "EASY" && <HeadlineBeginnerExercise data={exercise} />}
 
-          {searchParams.tab === "advance" && (
+          {tab === "ADVANCED" && (
             <HeadlineAdvanceExercise data={exercise} params={params} />
           )}
         </div>
       )}
-      {params.tools === "vertical-logic" && (
+      {params.tools === DataConstant.VERTICAL_LOGIC_TOOL_ID && (
         <div>
-          {searchParams.tab === "beginner" && (
-            <VLBeginnerExercise data={exercise} />
-          )}
-          {searchParams.tab === "advance" && (
-            <VLAdvanceExercise data={exercise} />
-          )}
+          {tab === "EASY" && <VLBeginnerExercise data={exercise} />}
+          {tab === "ADVANCED" && <VLAdvanceExercise data={exercise} />}
         </div>
       )}
 
-      {params.tools === "horizontal-logic" && (
+      {params.tools === DataConstant.HORIZONTAL_LOGIC_TOOL_ID && (
         <div>
-          {searchParams.tab === "beginner" && <HLBeginnerExercise />}
-          {searchParams.tab === "intermediate" && <HLIntermediateExercise />}
-          {searchParams.tab === "advance" && <HLAdvanceExercise />}
+          {tab === "EASY" && <HLBeginnerExercise />}
+          {tab === "INTERMEDIATE" && <HLIntermediateExercise />}
+          {tab === "ADVANCED" && <HLAdvanceExercise />}
         </div>
       )}
 
-      <div className="py-3 space-y-2">
+      {/* <div className="py-3 space-y-2">
         <div className="bg-gray-100 p-2 uppercase font-semibold text-sm rounded-md flex items-center justify-between ">
           <p>Feedback</p>
         </div>
@@ -138,7 +139,7 @@ export function Exercise({ params, searchParams }) {
             Submit
           </MyButton>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

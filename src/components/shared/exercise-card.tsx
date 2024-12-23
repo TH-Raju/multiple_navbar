@@ -9,7 +9,7 @@ export interface IExercise {
   label: string;
 }
 
-export const ExerciseCard = ({ item }: { item: IExercise }) => {
+export const ExerciseCard = ({ item }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();
@@ -18,13 +18,13 @@ export const ExerciseCard = ({ item }: { item: IExercise }) => {
       <div className="flex items-center gap-2 text-gray-700">
         <BookOpen size={22} className="text-gray-700" />
 
-        <p className="font-semibold text-sm md:text-base">{item.label}</p>
+        <p className="font-semibold text-sm md:text-base">{item.title}</p>
       </div>
 
       <MyButton
         onClick={() => {
           const params = new URLSearchParams(searchParams.toString());
-          params.set(KeyConstant.EXERCISE_ID, item.id);
+          params.set(KeyConstant.EXERCISE_ID, item._id);
 
           router.push(`${pathName}/exercise?${params.toString()}`);
         }}

@@ -1,4 +1,7 @@
 import { baseApi } from "@/redux/api/baseApi";
+import { TAGS } from "@/redux/tag";
+import { IResponse } from "@/types/response-type";
+import { ILoggedInUser } from "./auth.dto";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,7 +15,10 @@ const authApi = baseApi.injectEndpoints({
         },
       }),
     }),
-    logIn: builder.mutation({
+    logIn: builder.mutation<
+      IResponse<{ id: string }>,
+      { email: string; password: string }
+    >({
       query: (userInfo) => ({
         url: "/webapis/auth/loginViaEmailAndPassword",
         method: "POST",
@@ -22,6 +28,13 @@ const authApi = baseApi.injectEndpoints({
         },
       }),
     }),
+    loggedInUser: builder.query<IResponse<ILoggedInUser>, void>({
+      query: () => ({
+        url: "/webapis/user/userProfile",
+      }),
+      providesTags: [TAGS.loggedInUser],
+    }),
+
     changedPassword: builder.mutation({
       query: (password) => ({
         url: "/auth/change-password",
@@ -52,6 +65,7 @@ const authApi = baseApi.injectEndpoints({
 export const {
   useSignUpMutation,
   useLogInMutation,
+  useLoggedInUserQuery,
   useChangedPasswordMutation,
   useForgetPasswordMutation,
   useResetPasswordMutation,

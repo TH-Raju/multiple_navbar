@@ -2,6 +2,7 @@ import { MyLinkButton } from "@/components/shared/common/my-link-button";
 import MySectionTitle from "@/components/shared/common/my-section-title";
 
 import MySpacer from "@/components/shared/common/my-spacer";
+import { DataConstant } from "@/constants/data.constant";
 import StoryLiningLayoutComponent from "./storylining-layout";
 
 const FramingPage = () => {
@@ -42,7 +43,7 @@ const FramingPage = () => {
 
       <MySpacer className="h-6" />
       <MyLinkButton
-        href={"/storylining/headline?toolId=65f81884ea44df0751d0a15b"}
+        href={`/storylining/${DataConstant.HEADLINE_TOOL_ID}`}
         className="uppercase"
       >
         Start here

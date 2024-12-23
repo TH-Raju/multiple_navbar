@@ -2,25 +2,45 @@
 import { Button, Checkbox, Form, Input, message, Typography } from "antd"; // Import necessary components
 
 import { AllImages } from "@/assets/AllImages";
-import { useLogInMutation } from "@/redux/feature/auth/authApi";
+import { MyLoading } from "@/components/shared/common/my-loading";
+import { StatusCode } from "@/constants/code.constant";
+import {
+  useLoggedInUserQuery,
+  useLogInMutation,
+} from "@/redux/feature/auth/authApi";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import GoogleLinkedInLogin from "./GoogleLinkedInLogin";
 
 const LogInPage = () => {
+  const router = useRouter();
   const [logIn, { isLoading }] = useLogInMutation();
+  const { data, isLoading: isLoadingUser } = useLoggedInUserQuery();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
     const finalData = {
       email: values?.email,
       password: values?.password,
     };
-    logIn(finalData).catch((error) => {
-      message.error(error?.data?.message || "Login failed");
-    });
+    logIn(finalData)
+      .unwrap()
+      .then((res) => {
+        if (res.code === StatusCode.OK) {
+          router.push("/overview");
+        }
+      })
+      .catch((error) => {
+        message.error(error?.data?.message || "Login failed");
+      });
   };
 
+  if (isLoadingUser) {
+    return <MyLoading />;
+  }
+  if (data?.code === StatusCode.OK) {
+    router.push("/overview");
+  }
   return (
     <div className="bg-gray-100 p-10">
       <Image src={AllImages.logoBlack} alt="logo" className=" lg:h-full h-7" />
@@ -83,6 +103,7 @@ const LogInPage = () => {
                   htmlType="submit"
                   className="bg-gray-900 text-white h-12 text-base font-semibold"
                   block
+                  loading={isLoading}
                 >
                   LOGIN
                 </Button>
