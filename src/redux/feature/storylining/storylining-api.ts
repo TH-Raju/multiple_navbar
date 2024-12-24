@@ -14,8 +14,19 @@ const storyLiningApi = baseApi.injectEndpoints({
         url: `/webapis/storylining/content/${id}`,
       }),
     }),
+
+    calculateRelevance: builder.mutation({
+      query: ({ userInput, expertAnswer }) => ({
+        url: `/webapis/storylining/calculate-relevance`,
+        method: "POST",
+        body: { userInput, expertAnswer },
+      }),
+    }),
   }),
 });
 
-export const { useGetSLAllContentQuery, useGetSLSingleContentQuery } =
-  storyLiningApi;
+export const {
+  useGetSLAllContentQuery,
+  useGetSLSingleContentQuery,
+  useCalculateRelevanceMutation,
+} = storyLiningApi;

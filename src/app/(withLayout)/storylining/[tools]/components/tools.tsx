@@ -36,7 +36,7 @@ export const ToolsPage = () => {
       <MyTitleWithDivider title="Lessons" />
       <div className="overflow-x-auto">
         <div className="flex gap-5 py-1">
-          {lessons.map((item) => (
+          {lessons?.map((item) => (
             <LessonCard key={item._id} item={item} />
           ))}
         </div>
@@ -46,7 +46,7 @@ export const ToolsPage = () => {
 
       <MyTitleWithDivider title="Exercises" />
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {exercises.map((item) => (
+        {exercises?.map((item) => (
           <ExerciseCard key={item._id} item={item} />
         ))}
       </div>

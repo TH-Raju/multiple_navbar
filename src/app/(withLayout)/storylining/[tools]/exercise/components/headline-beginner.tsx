@@ -84,78 +84,101 @@ export const HeadlineBeginnerExercise = ({ data }) => {
           </div>
         </div>
       </div>
-      <div className="py-3 space-y-2">
-        <div className="bg-gray-100 p-2 uppercase font-semibold text-sm rounded-md flex items-center justify-between ">
-          <p>Feedback</p>
-        </div>
-        {feedback && (
-          <p className="border p-2 text-sm rounded-md">{feedback}</p>
-        )}
-      </div>
-      <MySpacer className="h-20" />
-      <div className="fixed bottom-0 left-0 w-full py-2 px-6 bg-gray-100 flex justify-end">
-        {answer.length > 0 && !showAnswer ? (
-          <div>
-            <MyButton
-              onClick={() => {
-                setAnswer("");
-                setSelectedOption(null);
-                setShowAnswer(false);
-                setFeedback("");
-              }}
-              className="uppercase"
-            >
-              Try Again
-            </MyButton>
+      <div>
+        <div className="py-3 space-y-2">
+          <div className="bg-gray-100 p-2 uppercase font-semibold text-sm rounded-md flex items-center justify-between ">
+            <p>Feedback</p>
           </div>
-        ) : (
-          <div className=" space-x-2">
-            <MyButton
-              onClick={() => {
-                if (
-                  data?.correct_answers.some(
-                    (answer) => answer._id === selectedOption
-                  )
-                ) {
-                  setFeedback(data?.default_positive_feedback);
-                  setAnswer(data?.correct_answers.map((it) => it._id));
-                  setShowAnswer(true);
-                  setSelectedOption(null);
-                  markToolContentAsCompleted(data._id);
-                } else {
-                  setFeedback(data?.default_negative_feedback);
-                  setAnswer(data?.correct_answers.map((it) => it._id));
-                }
-              }}
-              className="uppercase"
-              loading={isLoading}
-            >
-              Submit
-            </MyButton>
-
-            {nextItem && showAnswer && !isLoading && (
+          {feedback && (
+            <p className="border p-2 text-sm rounded-md">{feedback}</p>
+          )}
+        </div>
+        <MySpacer className="h-20" />
+        <div className="fixed bottom-0 left-0 w-full py-2 px-6 bg-gray-100 flex justify-end">
+          {answer.length > 0 && !showAnswer ? (
+            <div className=" space-x-2">
               <MyButton
                 onClick={() => {
-                  setFeedback("");
                   setAnswer("");
-                  setShowAnswer(false);
                   setSelectedOption(null);
-
-                  const currentParams = new URLSearchParams(
-                    searchParams.toString()
-                  );
-                  currentParams.set(KeyConstant.EXERCISE_ID, nextItem);
-
-                  router.push(`${pathname}?${currentParams.toString()}`);
+                  setShowAnswer(false);
+                  setFeedback("");
                 }}
-                className="uppercase border-green-500 text-green-500"
-                variant="outline"
+                className="uppercase"
               >
-                Next
+                Try Again
               </MyButton>
-            )}
-          </div>
-        )}
+              {nextItem && !isLoading && (
+                <MyButton
+                  onClick={() => {
+                    setFeedback("");
+                    setAnswer("");
+                    setShowAnswer(false);
+                    setSelectedOption(null);
+
+                    const currentParams = new URLSearchParams(
+                      searchParams.toString()
+                    );
+                    currentParams.set(KeyConstant.EXERCISE_ID, nextItem);
+
+                    router.push(`${pathname}?${currentParams.toString()}`);
+                  }}
+                  className="uppercase border-green-500 text-green-500"
+                  variant="outline"
+                >
+                  Next
+                </MyButton>
+              )}
+            </div>
+          ) : (
+            <div className=" space-x-2">
+              <MyButton
+                onClick={() => {
+                  if (
+                    data?.correct_answers.some(
+                      (answer) => answer._id === selectedOption
+                    )
+                  ) {
+                    setFeedback(data?.default_positive_feedback);
+                    setAnswer(data?.correct_answers.map((it) => it._id));
+                    setShowAnswer(true);
+                    setSelectedOption(null);
+                    markToolContentAsCompleted(data._id);
+                  } else {
+                    setFeedback(data?.default_negative_feedback);
+                    setAnswer(data?.correct_answers.map((it) => it._id));
+                  }
+                }}
+                className="uppercase"
+                loading={isLoading}
+              >
+                Submit
+              </MyButton>
+
+              {nextItem && showAnswer && !isLoading && (
+                <MyButton
+                  onClick={() => {
+                    setFeedback("");
+                    setAnswer("");
+                    setShowAnswer(false);
+                    setSelectedOption(null);
+
+                    const currentParams = new URLSearchParams(
+                      searchParams.toString()
+                    );
+                    currentParams.set(KeyConstant.EXERCISE_ID, nextItem);
+
+                    router.push(`${pathname}?${currentParams.toString()}`);
+                  }}
+                  className="uppercase border-green-500 text-green-500"
+                  variant="outline"
+                >
+                  Next
+                </MyButton>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
