@@ -1,13 +1,12 @@
 import { baseApi } from "@/redux/api/baseApi";
-import { TAGS } from "@/redux/tag";
 
-const storyLiningToolsApi = baseApi.injectEndpoints({
+const storyLiningApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getSLAllContent: builder.query({
       query: (id) => ({
         url: `/webapis/storylining/${id}/contents`,
       }),
-      providesTags: [TAGS.toolContent],
+      // providesTags: [TAGS.toolContent],
     }),
 
     getSLSingleContent: builder.query({
@@ -19,4 +18,4 @@ const storyLiningToolsApi = baseApi.injectEndpoints({
 });
 
 export const { useGetSLAllContentQuery, useGetSLSingleContentQuery } =
-  storyLiningToolsApi;
+  storyLiningApi;

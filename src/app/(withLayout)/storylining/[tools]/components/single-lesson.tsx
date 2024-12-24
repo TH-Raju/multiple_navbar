@@ -9,7 +9,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { KeyConstant } from "@/constants/key.constant";
-import { useGetSLSingleContentQuery } from "@/redux/feature/tools/storylining/storylining-api";
+import { useGetSLSingleContentQuery } from "@/redux/feature/storylining/storylining-api";
+import { useMarkContentAsCompletedMutation } from "@/redux/feature/tools/tools-api";
 import parse from "html-react-parser";
 import { Captions, CheckCircle, ChevronsRight, X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -37,9 +38,9 @@ export const SingleLesson = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // const idx = lessons.findIndex((item) => item.id === lessonId);
-  // const lesson = idx !== -1 ? { idx: idx + 1, ...lessons[idx] } : undefined;
   const lesson = data?.data.contents[0];
+  const [markToolContentAsCompleted, { isLoading: markLoading }] =
+    useMarkContentAsCompletedMutation();
 
   if (isLoading) {
     return <MyLoading />;
@@ -105,6 +106,7 @@ export const SingleLesson = () => {
                           </MyButton>
                         )}
                       </div>
+                      <p>{lesson?.short_desc}</p>
                       {lesson?.text && <div>{parse(`${lesson?.text}`)}</div>}
 
                       {/* TRASNCRIPT FOR MOBILE  */}
@@ -154,10 +156,13 @@ export const SingleLesson = () => {
               <div className="border-t bg-white w-full p-3">
                 <div className="flex justify-between items-center">
                   <MyButton
-                    onClick={() => {}}
+                    onClick={() => {
+                      markToolContentAsCompleted(lessonId);
+                    }}
                     variant="ghost"
                     className="text-green-500 "
                     startIcon={<CheckCircle />}
+                    loading={markLoading}
                   >
                     Marked as complete!
                   </MyButton>

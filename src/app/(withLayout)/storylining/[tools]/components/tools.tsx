@@ -6,7 +6,7 @@ import MyTitleWithDivider from "@/components/shared/common/my-title-with-divider
 import { ExerciseCard } from "@/components/shared/exercise-card";
 import { LessonCard } from "@/components/shared/lesson-card";
 import { KeyConstant } from "@/constants/key.constant";
-import { useGetSLAllContentQuery } from "@/redux/feature/tools/storylining/storylining-api";
+import { useGetSLAllContentQuery } from "@/redux/feature/storylining/storylining-api";
 import { useParams, useSearchParams } from "next/navigation";
 import { SingleLesson } from "./single-lesson";
 

@@ -1,17 +1,41 @@
 import MyButton from "@/components/shared/common/my-button";
 import MySpacer from "@/components/shared/common/my-spacer";
+import { KeyConstant } from "@/constants/key.constant";
+import { useGetSLAllContentQuery } from "@/redux/feature/storylining/storylining-api";
+import { useMarkContentAsCompletedMutation } from "@/redux/feature/tools/tools-api";
 import Image from "next/image";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export const HeadlineBeginnerExercise = ({ data }) => {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const tab = data?.difficulty;
+  const toolsId = data?.tool_id;
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
   const [showAnswer, setShowAnswer] = useState(false);
 
-  console.log(data);
+  const [markToolContentAsCompleted, { isLoading }] =
+    useMarkContentAsCompletedMutation();
+  const { data: allSLContent } = useGetSLAllContentQuery(toolsId);
 
-  console.log(answer);
+  const exercisesIndex = allSLContent?.data.contents
+    .filter((item) => item.type === data.type && item.difficulty === tab)
+    .sort((a, b) => a.order - b.order)
+    .map((item) => item._id);
+
+  const currentIndex = exercisesIndex?.indexOf(data._id);
+
+  // Get the next item, or null if it's the last item
+  const nextItem =
+    currentIndex !== -1 && currentIndex < exercisesIndex?.length - 1
+      ? exercisesIndex[currentIndex + 1]
+      : null;
 
   return (
     <div>
@@ -85,7 +109,7 @@ export const HeadlineBeginnerExercise = ({ data }) => {
             </MyButton>
           </div>
         ) : (
-          <div>
+          <div className=" space-x-2">
             <MyButton
               onClick={() => {
                 if (
@@ -96,15 +120,40 @@ export const HeadlineBeginnerExercise = ({ data }) => {
                   setFeedback(data?.default_positive_feedback);
                   setAnswer(data?.correct_answers.map((it) => it._id));
                   setShowAnswer(true);
+                  setSelectedOption(null);
+                  markToolContentAsCompleted(data._id);
                 } else {
                   setFeedback(data?.default_negative_feedback);
                   setAnswer(data?.correct_answers.map((it) => it._id));
                 }
               }}
               className="uppercase"
+              loading={isLoading}
             >
               Submit
             </MyButton>
+
+            {nextItem && showAnswer && !isLoading && (
+              <MyButton
+                onClick={() => {
+                  setFeedback("");
+                  setAnswer("");
+                  setShowAnswer(false);
+                  setSelectedOption(null);
+
+                  const currentParams = new URLSearchParams(
+                    searchParams.toString()
+                  );
+                  currentParams.set(KeyConstant.EXERCISE_ID, nextItem);
+
+                  router.push(`${pathname}?${currentParams.toString()}`);
+                }}
+                className="uppercase border-green-500 text-green-500"
+                variant="outline"
+              >
+                Next
+              </MyButton>
+            )}
           </div>
         )}
       </div>

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { DataConstant } from "@/constants/data.constant";
 import { KeyConstant } from "@/constants/key.constant";
-import { useGetSLSingleContentQuery } from "@/redux/feature/tools/storylining/storylining-api";
+import { useGetSLSingleContentQuery } from "@/redux/feature/storylining/storylining-api";
 import Image from "next/image";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { HeadlineAdvanceExercise } from "./headline-advance";
@@ -41,13 +41,21 @@ export function Exercise() {
   const exerciseId = searchParams.get(KeyConstant.EXERCISE_ID);
   const { data, isLoading } = useGetSLSingleContentQuery(exerciseId);
 
-  const breadcrumb = [
+  const exercise = data?.data.contents[0];
+  const routePath = [
     ...pathName.split("-").join(" ").split("/").slice(1, -1),
     tab,
-    `Exercise  ${searchParams.get(KeyConstant.EXERCISE_ID)}`,
+    `${exercise?.title}`,
   ];
 
-  const exercise = data?.data.contents[0];
+  const breadcrumb = routePath.map((item, index) => {
+    if (index === 1) {
+      const tool = DataConstant.TOOLS.find((tool) => tool.id === item);
+      return tool ? tool.name : item; // Replace with name if match found, else keep original
+    }
+    return item;
+  });
+
   if (isLoading) {
     return <MyLoading />;
   }

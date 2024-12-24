@@ -1,13 +1,16 @@
 "use client";
 import { MyLoading } from "@/components/shared/common/my-loading";
+import { StatusCode } from "@/constants/code.constant";
 import { useLoggedInUserQuery } from "@/redux/feature/auth/authApi";
 import { Button, Checkbox, Form, Input, Typography } from "antd"; // Import necessary components
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import GoogleLinkedin from "./GoogleLinkedin";
 import LogoPart from "./LogoPart";
 import PotentialPar from "./PotentialPar";
 
 const SignUpPage = () => {
+  const router = useRouter();
   const { data, isLoading: isLoadingUser } = useLoggedInUserQuery();
 
   const onFinish = (values) => {
