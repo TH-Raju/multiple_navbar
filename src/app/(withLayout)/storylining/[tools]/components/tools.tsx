@@ -35,6 +35,9 @@ export const ToolsPage = () => {
     <div>
       <MyTitleWithDivider title="Lessons" />
       <div className="overflow-x-auto">
+        {lessons?.length === 0 && (
+          <p className="text-gray-400">No lessons found</p>
+        )}
         <div className="flex gap-5 py-1">
           {lessons?.map((item) => (
             <LessonCard key={item._id} item={item} />
@@ -45,6 +48,9 @@ export const ToolsPage = () => {
       <MySpacer className="h-6" />
 
       <MyTitleWithDivider title="Exercises" />
+      {exercises?.length === 0 && (
+        <p className="text-gray-400">No exercises found</p>
+      )}
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
         {exercises?.map((item) => (
           <ExerciseCard key={item._id} item={item} />

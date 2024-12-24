@@ -97,9 +97,7 @@ export function Exercise() {
         <div>
           {tab === "EASY" && <HeadlineBeginnerExercise data={exercise} />}
 
-          {tab === "ADVANCED" && (
-            <HeadlineAdvanceExercise data={exercise} params={params} />
-          )}
+          {tab === "ADVANCED" && <HeadlineAdvanceExercise data={exercise} />}
         </div>
       )}
       {params.tools === DataConstant.VERTICAL_LOGIC_TOOL_ID && (

@@ -89,14 +89,14 @@ export const HeadlineAdvanceExercise = ({ data }) => {
           </div>
         </div>
         <div>
-          <div className="py-3 space-y-2">
-            <div className="bg-gray-100 p-2 uppercase font-semibold text-sm rounded-md flex items-center justify-between ">
-              <p>Feedback</p>
-            </div>
-            {feedback && (
+          {feedback && (
+            <div className="py-3 space-y-2">
+              <div className="bg-gray-100 p-2 uppercase font-semibold text-sm rounded-md flex items-center justify-between ">
+                <p>Feedback</p>
+              </div>
               <p className="border p-2 text-sm rounded-md">{feedback}</p>
-            )}
-          </div>
+            </div>
+          )}
           <MySpacer className="h-20" />
           <div className="fixed bottom-0 left-0 w-full py-2 px-6 bg-gray-100 flex justify-end">
             {feedback ? (
