@@ -17,4 +17,5 @@ export const DataConstant = {
       name: "Horizontal Logic",
     },
   ],
+  KURATED_STORYLINING_ID: "649c675c30192b94e7f1b250",
 } as const;

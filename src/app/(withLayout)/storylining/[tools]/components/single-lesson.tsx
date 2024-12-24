@@ -1,6 +1,5 @@
 "use client";
 import MyButton from "@/components/shared/common/my-button";
-import { MyLoading } from "@/components/shared/common/my-loading";
 import MySectionTitle from "@/components/shared/common/my-section-title";
 import {
   Accordion,
@@ -10,22 +9,26 @@ import {
 } from "@/components/ui/accordion";
 import { KeyConstant } from "@/constants/key.constant";
 import { useGetSLSingleContentQuery } from "@/redux/feature/storylining/storylining-api";
-import { useMarkContentAsCompletedMutation } from "@/redux/feature/tools/tools-api";
+import {
+  useGetUserProgressQuery,
+  useMarkContentAsCompletedMutation,
+} from "@/redux/feature/tools/tools-api";
 import parse from "html-react-parser";
 import { Captions, CheckCircle, ChevronsRight, X } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const SingleLesson = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const params = useParams();
 
   const isModalOpen = searchParams.get(KeyConstant.MODAL);
   const lessonId = searchParams.get(KeyConstant.LESSON_ID);
   const [isMobile, setIsMobile] = useState(false);
   const [isTranscript, setTranscript] = useState(true);
 
-  const { data, isLoading } = useGetSLSingleContentQuery(lessonId);
+  const { data } = useGetSLSingleContentQuery(lessonId);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024); // Change 768 to your desired breakpoint
@@ -38,13 +41,16 @@ export const SingleLesson = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const lesson = data?.data.contents[0];
+  const lesson = data?.data?.contents[0];
   const [markToolContentAsCompleted, { isLoading: markLoading }] =
     useMarkContentAsCompletedMutation();
+  const { data: userProgress } = useGetUserProgressQuery(undefined);
 
-  if (isLoading) {
-    return <MyLoading />;
-  }
+  const isCompleted =
+    userProgress?.data?.progress?.tools[
+      params.tools.toString()
+    ]?.contentExceptExercise?.includes(lessonId);
+
   // if (!lessonId) {
   //   return notFound();
   // }
@@ -155,17 +161,32 @@ export const SingleLesson = () => {
 
               <div className="border-t bg-white w-full p-3">
                 <div className="flex justify-between items-center">
-                  <MyButton
-                    onClick={() => {
-                      markToolContentAsCompleted(lessonId);
-                    }}
-                    variant="ghost"
-                    className="text-green-500 "
-                    startIcon={<CheckCircle />}
-                    loading={markLoading}
-                  >
-                    Marked as complete!
-                  </MyButton>
+                  {isCompleted ? (
+                    <MyButton
+                      onClick={() => {
+                        // markToolContentAsCompleted(lessonId);
+                      }}
+                      variant="ghost"
+                      className="text-green-500 hover:text-green-500"
+                      startIcon={<CheckCircle />}
+                      // loading={markLoading}
+                    >
+                      Marked as complete!
+                    </MyButton>
+                  ) : (
+                    <MyButton
+                      onClick={() => {
+                        markToolContentAsCompleted(lessonId);
+                      }}
+                      variant="ghost"
+                      // className="text-green-500 "
+                      startIcon={<CheckCircle />}
+                      className="bg-gray-100"
+                      loading={markLoading}
+                    >
+                      Marke as complete!
+                    </MyButton>
+                  )}
 
                   {/* <div className="space-x-2">
                     <MyButton

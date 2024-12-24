@@ -2,7 +2,6 @@
 
 import { AllImages } from "@/assets/AllImages";
 import MyButton from "@/components/shared/common/my-button";
-import { MyLoading } from "@/components/shared/common/my-loading";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -39,9 +38,9 @@ export function Exercise() {
 
   const tab = searchParams.get(KeyConstant.TAB);
   const exerciseId = searchParams.get(KeyConstant.EXERCISE_ID);
-  const { data, isLoading } = useGetSLSingleContentQuery(exerciseId);
+  const { data } = useGetSLSingleContentQuery(exerciseId);
 
-  const exercise = data?.data.contents[0];
+  const exercise = data?.data?.contents[0];
   const routePath = [
     ...pathName.split("-").join(" ").split("/").slice(1, -1),
     tab,
@@ -56,9 +55,6 @@ export function Exercise() {
     return item;
   });
 
-  if (isLoading) {
-    return <MyLoading />;
-  }
   return (
     <div>
       <div>

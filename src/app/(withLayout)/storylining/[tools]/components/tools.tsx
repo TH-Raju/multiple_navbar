@@ -1,6 +1,5 @@
 "use client";
 
-import { MyLoading } from "@/components/shared/common/my-loading";
 import MySpacer from "@/components/shared/common/my-spacer";
 import MyTitleWithDivider from "@/components/shared/common/my-title-with-divider";
 import { ExerciseCard } from "@/components/shared/exercise-card";
@@ -16,21 +15,18 @@ export const ToolsPage = () => {
   const tab = searchParams.get(KeyConstant.TAB);
   const toolsId = params.tools;
 
-  const { data, isLoading } = useGetSLAllContentQuery(toolsId);
+  const { data } = useGetSLAllContentQuery(toolsId);
 
-  const lessons = data?.data.contents
+  const lessons = data?.data?.contents
     .filter((item) => item.type === "LEARNING" && item.difficulty === tab)
     .sort((a, b) => a.order - b.order);
 
-  const exercises = data?.data.contents
+  const exercises = data?.data?.contents
     .filter(
       (item) => item.type === "EMBEDDABLE_EXERCISE" && item.difficulty === tab
     )
     .sort((a, b) => a.order - b.order);
 
-  if (isLoading) {
-    return <MyLoading />;
-  }
   return (
     <div>
       <MyTitleWithDivider title="Lessons" />

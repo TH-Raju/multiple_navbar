@@ -1,14 +1,18 @@
 "use client";
 
 import { KeyConstant } from "@/constants/key.constant";
+import { useGetUserProgressQuery } from "@/redux/feature/tools/tools-api";
 import { BookOpen, CircleCheckBig, PlayCircle } from "lucide-react";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import MyButton from "./common/my-button";
 
 export const LessonCard = ({ item }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const params = useParams();
+
+  const { data: userProgress } = useGetUserProgressQuery(undefined);
 
   const updateParams = (lessonId: string) => {
     const params = new URLSearchParams(searchParams.toString()); // Clone existing params
@@ -17,6 +21,10 @@ export const LessonCard = ({ item }) => {
 
     router.push(`?${params.toString()}`);
   };
+
+  const isCompleted = userProgress?.data?.progress?.tools[
+    params.tools.toString()
+  ]?.contentExceptExercise?.includes(item._id);
 
   return (
     <div className="min-w-[240px] lg:min-w-[300px] space-y-2 w-1/5 mb-6 group">
@@ -65,7 +73,9 @@ export const LessonCard = ({ item }) => {
           <h2 className="font-semibold">{item.title}</h2>
         </div>
 
-        <CircleCheckBig size={20} className={`text-green-500`} />
+        {isCompleted && (
+          <CircleCheckBig size={20} className={`text-green-500`} />
+        )}
       </div>
     </div>
   );
