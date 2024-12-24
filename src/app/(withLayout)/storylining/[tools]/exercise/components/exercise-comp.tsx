@@ -109,8 +109,8 @@ export function Exercise() {
 
       {params.tools === DataConstant.HORIZONTAL_LOGIC_TOOL_ID && (
         <div>
-          {tab === "EASY" && <HLBeginnerExercise />}
-          {tab === "INTERMEDIATE" && <HLIntermediateExercise />}
+          {tab === "EASY" && <HLBeginnerExercise data={exercise} />}
+          {tab === "INTERMEDIATE" && <HLIntermediateExercise data={exercise} />}
           {tab === "ADVANCED" && <HLAdvanceExercise />}
         </div>
       )}
