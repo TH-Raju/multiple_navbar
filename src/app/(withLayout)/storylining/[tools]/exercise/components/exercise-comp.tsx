@@ -111,7 +111,7 @@ export function Exercise() {
         <div>
           {tab === "EASY" && <HLBeginnerExercise data={exercise} />}
           {tab === "INTERMEDIATE" && <HLIntermediateExercise data={exercise} />}
-          {tab === "ADVANCED" && <HLAdvanceExercise />}
+          {tab === "ADVANCED" && <HLAdvanceExercise data={exercise} />}
         </div>
       )}
 
