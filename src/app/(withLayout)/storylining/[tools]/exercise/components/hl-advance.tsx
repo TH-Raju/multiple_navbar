@@ -305,7 +305,7 @@ const ProgressColumn = ({ items }) => {
       }}
     >
       <div className="grid md:grid-cols-4 gap-3">
-        {items.map((item) =>
+        {items?.map((item) =>
           item ? (
             <Item key={item.id} data={item} />
           ) : (
