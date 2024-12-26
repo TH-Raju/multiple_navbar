@@ -7,11 +7,18 @@ const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     signUp: builder.mutation({
       query: (userInfo) => ({
-        url: "/users/create-actor",
-        method: "POST",
-        body: userInfo,
+        url: "/webapis/user/createAccount",
+        method: "PUT",
+        body: {
+          name: userInfo.fullName,
+          otp: userInfo.otp,
+          role: "N/A",
+          location: "N/A",
+          company: "N/A",
+        },
         headers: {
-          "Content-Type": "application/json",
+          email: userInfo.email,
+          password: userInfo.password,
         },
       }),
     }),
@@ -35,30 +42,50 @@ const authApi = baseApi.injectEndpoints({
       providesTags: [TAGS.loggedInUser],
     }),
 
-    changedPassword: builder.mutation({
-      query: (password) => ({
-        url: "/auth/change-password",
+    checkEmailExistence: builder.mutation({
+      query: (email) => ({
+        url: `/webapis/auth/checkForEmailExistence`,
         method: "POST",
-        body: password,
-      }),
-    }),
-    forgetPassword: builder.mutation({
-      query: (password) => ({
-        url: "/auth/forget-password",
-        method: "POST",
-        body: password,
-      }),
-    }),
-    resetPassword: builder.mutation({
-      query: ({ data, headers }) => ({
-        url: "/auth/reset-password",
-        method: "POST",
-        body: data,
         headers: {
-          ...headers,
+          email: email,
         },
       }),
     }),
+
+    sendOtp: builder.mutation({
+      query: (email) => ({
+        url: `/webapis/user/sendOTPOnEmail`,
+        method: "POST",
+        body: {
+          email: email,
+        },
+      }),
+    }),
+
+    // changedPassword: builder.mutation({
+    //   query: (password) => ({
+    //     url: "/auth/change-password",
+    //     method: "POST",
+    //     body: password,
+    //   }),
+    // }),
+    // forgetPassword: builder.mutation({
+    //   query: (password) => ({
+    //     url: "/auth/forget-password",
+    //     method: "POST",
+    //     body: password,
+    //   }),
+    // }),
+    // resetPassword: builder.mutation({
+    //   query: ({ data, headers }) => ({
+    //     url: "/auth/reset-password",
+    //     method: "POST",
+    //     body: data,
+    //     headers: {
+    //       ...headers,
+    //     },
+    //   }),
+    // }),
   }),
 });
 
@@ -66,7 +93,9 @@ export const {
   useSignUpMutation,
   useLogInMutation,
   useLoggedInUserQuery,
-  useChangedPasswordMutation,
-  useForgetPasswordMutation,
-  useResetPasswordMutation,
+  useCheckEmailExistenceMutation,
+  useSendOtpMutation,
+  // useChangedPasswordMutation,
+  // useForgetPasswordMutation,
+  // useResetPasswordMutation,
 } = authApi;
