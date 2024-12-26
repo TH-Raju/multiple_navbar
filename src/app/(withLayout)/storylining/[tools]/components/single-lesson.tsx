@@ -17,6 +17,7 @@ import parse from "html-react-parser";
 import { Captions, CheckCircle, ChevronsRight, X } from "lucide-react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import TranscriptViewer from "./transcript";
 
 export const SingleLesson = () => {
   const searchParams = useSearchParams();
@@ -99,7 +100,7 @@ export const SingleLesson = () => {
                         <h1 className="text-xl md:text-2xl font-semibold py-3">
                           Lesson: {lesson?.title}
                         </h1>
-                        {!isTranscript && (
+                        {!isTranscript && !(lesson?.subtype === "TEXTUAL") && (
                           <MyButton
                             startIcon={<Captions />}
                             variant="outline"
@@ -116,7 +117,7 @@ export const SingleLesson = () => {
                       {lesson?.text && <div>{parse(`${lesson?.text}`)}</div>}
 
                       {/* TRASNCRIPT FOR MOBILE  */}
-                      {isMobile && (
+                      {isMobile && !(lesson?.subtype === "TEXTUAL") && (
                         <Accordion
                           type="single"
                           collapsible
@@ -130,7 +131,7 @@ export const SingleLesson = () => {
                               Transcript
                             </AccordionTrigger>
                             <AccordionContent>
-                              {lesson?.content}
+                              <TranscriptViewer url={lesson?.transcriptFile} />
                             </AccordionContent>
                           </AccordionItem>
                         </Accordion>
@@ -139,7 +140,7 @@ export const SingleLesson = () => {
                   </div>
 
                   {/* TRANSCRIPT  */}
-                  {isTranscript && (
+                  {isTranscript && !(lesson?.subtype === "TEXTUAL") && (
                     <div className="col-span-1 bg-gray-100 py-3 px-5 rounded-lg">
                       <div className="flex items-center justify-between">
                         <MySectionTitle title="Transcript" />
@@ -153,7 +154,11 @@ export const SingleLesson = () => {
                           <ChevronsRight />
                         </MyButton>
                       </div>
-                      <p className="pt-2">{lesson?.short_desc}</p>
+                      <div>
+                        <div className="h-[70vh] overflow-y-auto">
+                          <TranscriptViewer url={lesson?.transcriptFile} />
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
