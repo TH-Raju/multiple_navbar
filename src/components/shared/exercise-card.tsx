@@ -28,13 +28,13 @@ export const ExerciseCard = ({ item }) => {
 
   return (
     <div
-      className={`border-2 p-5 rounded-md space-y-6 ${
+      className={`flex items-center justify-between border-2 px-6 py-3 rounded-md ${
         isCompleted ? "bg-[#E3F9D1]" : " bg-gray-50"
       }`}
     >
       <div className="flex items-center gap-2 text-gray-700">
         <BookOpen size={22} className="text-gray-700" />
-        <p className="font-semibold text-sm md:text-base">{item.title}</p>
+        <p className="font-semibold text-sm md:text-sm">{item.title}</p>
       </div>
 
       <MyButton
@@ -47,11 +47,11 @@ export const ExerciseCard = ({ item }) => {
         variant="ghost"
         className={`${
           isCompleted
-            ? "bg-transparent text-green-600 border-green-600 hover:bg-[#E3F9D1] border-2 w-full text-center font-semibold"
-            : "bg-transparent text-gray-500 border-2 w-full text-center hover:bg-white hover:text-black font-semibold"
+            ? "bg-transparent text-green-600 text-sm border-green-600 hover:bg-[#E3F9D1] border-2 w-fit text-center font-semibold"
+            : "bg-transparent text-gray-500 text-sm border-2 w-fit text-center hover:bg-white hover:text-black font-semibold"
         }`}
       >
-        Open Exercise
+        {isCompleted ? "Redo Exercise" : "Open Exercise"}
       </MyButton>
     </div>
   );

@@ -1,23 +1,31 @@
 "use client";
 import { AllImages } from "@/assets/AllImages";
+import { DataConstant } from "@/constants/data.constant";
 import { AuthGuard } from "@/Layout/auth-guard";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Drawer, Layout, Menu, theme } from "antd";
+import { useLogoutMutation } from "@/redux/feature/auth/authApi";
+import {
+  Button,
+  ConfigProvider,
+  Drawer,
+  Dropdown,
+  Layout,
+  Menu,
+  theme,
+} from "antd";
 import Sider from "antd/es/layout/Sider";
+import { MenuIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
 import { useEffect, useState } from "react";
-import { GoHomeFill } from "react-icons/go";
-import { MdOutlineFilterFrames } from "react-icons/md";
-import { PiNetworkFill } from "react-icons/pi";
 const { Header, Content } = Layout;
 
 const LayoutComponent = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false); // For Sider on larger screens
   const [isMobile, setIsMobile] = useState(false); // To track if the screen is mobile
   const [drawerVisible, setDrawerVisible] = useState(false); // For controlling Drawer visibility
+  const [logout, { isLoading }] = useLogoutMutation(undefined);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -53,15 +61,45 @@ const LayoutComponent = ({ children }) => {
   function handleClick(e) {
     setCurrent(e.key);
   }
+  const onLogOut = async () => {
+    await logout(undefined);
+    window.location.reload();
+  };
+  const profileItems = [
+    {
+      key: "profile",
+      label: (
+        <Link href={"/profile"} className="text-gray-500">
+          My Profile
+        </Link>
+      ),
+    },
+    {
+      key: "support",
+      label: (
+        <Link href={"/support"} className="text-gray-500">
+          Help and Support
+        </Link>
+      ),
+    },
+    {
+      key: "logout",
+      label: (
+        <p className="text-gray-500 hover:text-red-500" onClick={onLogOut}>
+          {isLoading ? "Loading..." : "Logout"}
+        </p>
+      ),
+    },
+  ];
 
   const items = [
     {
       key: "overview",
-      icon: (
-        <GoHomeFill className="text-yellow-400 text-2xl h-full text-center" />
-      ),
+      icon: collapsed ? <Image src={AllImages.homeIcon} alt="home" /> : "",
+      // icon:  <Image src={AllImages.homeIcon} alt="home" />,
       label: (
-        <p className="text-base">
+        <p className="text-base flex gap-2 ml-2">
+          <Image src={AllImages.homeIcon} alt="home" />
           <Link href={"/overview"}>Overview</Link>
         </p>
       ),
@@ -69,24 +107,147 @@ const LayoutComponent = ({ children }) => {
     {
       key: "framing",
       icon: (
-        <MdOutlineFilterFrames className="text-yellow-400 text-2xl items-center h-full text-center" />
+        <Image
+          src={AllImages.frameIcon}
+          alt="home"
+          className={collapsed ? "h-10 w-full object-contain" : ""}
+        />
       ),
-      label: (
-        <p className="text-base">
-          <Link href={"/framing"}>Framing</Link>
-        </p>
-      ),
+      label: <p className="text-base">Framing</p>,
+      children: [
+        {
+          key: "g1",
+          label: (
+            <Link
+              rel="noopener noreferrer"
+              href={`/framing`}
+              className="text-gray-500 font-medium"
+            >
+              Overview
+            </Link>
+          ),
+        },
+        {
+          label: (
+            <Link
+              rel="noopener noreferrer"
+              href={`/framing/${DataConstant.FM_SCQ_TOOL_ID}`}
+              className="text-gray-500 font-medium"
+            >
+              SCQ
+            </Link>
+          ),
+          key: "g2",
+        },
+        {
+          label: (
+            <Link
+              rel="noopener noreferrer"
+              href={`/framing/${DataConstant.FM_HEADLINE_TOOL_ID}`}
+              className="text-gray-500 font-medium"
+            >
+              Headline
+            </Link>
+          ),
+          key: "g2",
+        },
+        {
+          label: (
+            <Link
+              rel="noopener noreferrer"
+              href={`/framing/${DataConstant.FM_EVIDENCE_TOOL_ID}`}
+              className="text-gray-500 font-medium"
+            >
+              Evidence
+            </Link>
+          ),
+          key: "g3",
+        },
+        {
+          label: (
+            <Link
+              rel="noopener noreferrer"
+              href={`/framing/${DataConstant.FM_CHALLENGE_TOOL_ID}`}
+              className="text-gray-500 font-medium"
+            >
+              Challenge
+            </Link>
+          ),
+          key: "g4",
+        },
+        {
+          label: (
+            <Link
+              rel="noopener noreferrer"
+              href={`/framing/${DataConstant.FM_SCENARIOS_TOOL_ID}`}
+              className="text-gray-500 font-medium"
+            >
+              Scenario
+            </Link>
+          ),
+          key: "g4",
+        },
+      ],
     },
     {
       key: "storylining",
-      icon: (
-        <PiNetworkFill className="text-yellow-400 text-2xl items-center h-full text-center" />
-      ),
+      icon: <Image src={AllImages.storyIcon} alt="home" />,
       label: (
         <p className="text-base">
-          <Link href={"/storylining"}>Storylining</Link>
+          Storylining
+          {/* <Link href={"/storylining"}>Storylining</Link> */}
         </p>
       ),
+      children: [
+        {
+          key: "g1",
+          label: (
+            <Link
+              rel="noopener noreferrer"
+              href={`/storylining`}
+              className="text-gray-500 font-medium"
+            >
+              Overview
+            </Link>
+          ),
+        },
+        {
+          label: (
+            <Link
+              rel="noopener noreferrer"
+              href={`/storylining/${DataConstant.HEADLINE_TOOL_ID}`}
+              className="text-gray-500 font-medium"
+            >
+              Headline
+            </Link>
+          ),
+          key: "g2",
+        },
+        {
+          label: (
+            <Link
+              rel="noopener noreferrer"
+              href={`/storylining/${DataConstant.HORIZONTAL_LOGIC_TOOL_ID}`}
+              className="text-gray-500 font-medium"
+            >
+              Horizontal Logic
+            </Link>
+          ),
+          key: "g3",
+        },
+        {
+          label: (
+            <Link
+              rel="noopener noreferrer"
+              href={`/storylining/${DataConstant.VERTICAL_LOGIC_TOOL_ID}`}
+              className="text-gray-500 font-medium"
+            >
+              Vertical Logic
+            </Link>
+          ),
+          key: "g4",
+        },
+      ],
     },
   ];
 
@@ -112,12 +273,13 @@ const LayoutComponent = ({ children }) => {
               padding: 0,
               background: "#f5f6f8",
             }}
+            className="sticky w-full z-50 top-0 border-b"
           >
             {/* Custom Button for Desktop Trigger */}
-            <div className="flex items-center">
+            <div className=" flex items-center h-full">
               <Button
                 type="text"
-                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                icon={collapsed ? <MenuIcon /> : <MenuIcon />}
                 onClick={() => {
                   if (isMobile) {
                     toggleDrawer(); // Toggle Drawer on mobile
@@ -127,48 +289,54 @@ const LayoutComponent = ({ children }) => {
                 }}
                 style={{
                   fontSize: "16px",
-                  width: 64,
-                  height: 64,
+                  padding: "30px",
+                  // width: "40px",
+                  // height: 64,
                 }}
               />
               <div className="flex w-full justify-between items-center px-4">
                 <Image
                   src={AllImages.logoBlack}
                   alt="logo"
-                  className="w-20 lg:w-fit h-fit"
+                  className="lg:w-fit h-fit"
                 />
-                <div className="px-6">
-                  <Image
-                    src={AllImages.defaultAvatar}
-                    alt="logo"
-                    className="w-10 h-10 object-cover rounded-full"
-                  />
-                </div>
+                <Dropdown menu={{ items: profileItems }}>
+                  <div className="p-2">
+                    <Image
+                      src={AllImages.defaultAvatar}
+                      alt="logo"
+                      className="w-10 h-10 object-cover rounded-full hover:cursor-pointer"
+                    />
+                  </div>
+                </Dropdown>
               </div>
             </div>
           </Header>
 
           <Layout>
             {!isMobile ? (
-              <Sider
-                trigger={null}
-                collapsible
-                collapsed={collapsed}
-                style={{
-                  minHeight: "100vh",
-                  backgroundColor: "#f5f6f8",
-                }}
-                className="border-t border-r py-2 font-mulish"
-              >
-                <Menu
-                  mode="inline"
-                  className=" bg-[#f5f6f8] border-r-0 font-mulish"
-                  defaultSelectedKeys={["1"]}
-                  items={items}
-                  selectedKeys={[current]}
-                  onClick={handleClick}
-                />
-              </Sider>
+              <div className="fixed top-0 left-0 pt-16 bg-[#f5f6f8] ">
+                <Sider
+                  width={250}
+                  collapsedWidth={80}
+                  trigger={null}
+                  collapsible
+                  collapsed={collapsed}
+                  style={{
+                    backgroundColor: "#f5f6f8",
+                  }}
+                  className="h-screen overflow-y-auto  border-r py-2 font-mulish w-[300px]"
+                >
+                  <Menu
+                    mode="inline"
+                    className="bg-[#f5f6f8] border-r-0 font-mulish"
+                    defaultSelectedKeys={["1"]}
+                    items={items}
+                    selectedKeys={[current]}
+                    onClick={handleClick}
+                  />
+                </Sider>
+              </div>
             ) : (
               <Drawer
                 placement="left"
@@ -188,19 +356,18 @@ const LayoutComponent = ({ children }) => {
                 />
               </Drawer>
             )}
-
-            <Content
-              className="border-t p-5 md:p-7 lg:p-10 bg-[#fafafa] font-mulish"
-              style={{
-                // margin: "24px 16px",
-                // padding: 40,
-                minHeight: 280,
-                // background: colorBgContainer,
-                // borderRadius: borderRadiusLG,
-              }}
-            >
-              {children}
-            </Content>
+            <Layout>
+              <Content
+                className="p-5 md:p-7 lg:p-10 bg-[#fafafa] font-mulish min-h-[calc(100vh-64px)] overflow-y-auto"
+                style={{
+                  minHeight: 280,
+                  marginLeft: !isMobile ? (collapsed ? 80 : 250) : 0,
+                  transition: "margin-left 0.2s ease",
+                }}
+              >
+                {children}
+              </Content>
+            </Layout>
           </Layout>
         </Layout>
       </ConfigProvider>

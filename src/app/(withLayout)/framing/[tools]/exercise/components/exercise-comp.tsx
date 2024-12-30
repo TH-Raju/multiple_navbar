@@ -12,7 +12,6 @@ import { DataConstant } from "@/constants/data.constant";
 import { KeyConstant } from "@/constants/key.constant";
 import { useGetSLSingleContentQuery } from "@/redux/feature/storylining/storylining-api";
 import Image from "next/image";
-import Link from "next/link";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { HeadlineAdvanceExercise } from "./headline-advance";
 import { HeadlineBeginnerExercise } from "./headline-beginner";
@@ -44,7 +43,7 @@ export function Exercise() {
   const exercise = data?.data?.contents[0];
   const routePath = [
     ...pathName.split("-").join(" ").split("/").slice(1, -1),
-    `${tab}`,
+    tab,
     `${exercise?.title}`,
   ];
 
@@ -61,34 +60,15 @@ export function Exercise() {
       <div>
         <Breadcrumb>
           <BreadcrumbList>
-            {routePath.map((name, index) => {
-              const routeTo = `/${routePath.slice(0, index + 1).join("/")}`;
-              const isSecondLast = index === routePath.length - 2;
-              const isLast = index === routePath.length - 1;
-
-              return (
+            {breadcrumb.map((item, index) => (
+              <>
                 <BreadcrumbItem className="font-semibold capitalize text-xs md:text-sm">
-                  {isLast || isSecondLast ? (
-                    name // Render text for the last segment
-                  ) : (
-                    <Link
-                      href={routeTo}
-                      className="hover:underline text-gray-500"
-                    >
-                      {index === 1
-                        ? routePath.map((item, index) => {
-                            const tool = DataConstant.TOOLS.find(
-                              (tool) => tool.id === item
-                            );
-                            return tool?.name;
-                          })
-                        : name}
-                    </Link>
-                  )}
-                  {index < breadcrumb.length - 1 && <BreadcrumbSeparator />}
+                  {/* <Link href="/">{item}</Link> */}
+                  {item}
                 </BreadcrumbItem>
-              );
-            })}
+                {index < breadcrumb.length - 1 && <BreadcrumbSeparator />}
+              </>
+            ))}
           </BreadcrumbList>
         </Breadcrumb>
       </div>

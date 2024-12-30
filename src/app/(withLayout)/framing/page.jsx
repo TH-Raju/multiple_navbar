@@ -2,11 +2,13 @@ import { MyLinkButton } from "@/components/shared/common/my-link-button";
 import MySectionTitle from "@/components/shared/common/my-section-title";
 
 import MySpacer from "@/components/shared/common/my-spacer";
+import { DataConstant } from "@/constants/data.constant";
 
 const FramingPage = () => {
   return (
     <div>
-      <MySectionTitle title={"Introduction"} className={"py-8"} />
+      {/* <StoryLiningLayoutComponent> */}
+      <MySectionTitle title={"Introduction"} className={"pb-8"} />
 
       <p>
         Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -40,9 +42,13 @@ const FramingPage = () => {
       </p>
 
       <MySpacer className="h-6" />
-      <MyLinkButton href={"/"} className="uppercase">
+      <MyLinkButton
+        href={`/storylining/${DataConstant.HEADLINE_TOOL_ID}`}
+        className="uppercase"
+      >
         Start here
       </MyLinkButton>
+      {/* </StoryLiningLayoutComponent> */}
     </div>
   );
 };

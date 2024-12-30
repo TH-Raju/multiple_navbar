@@ -61,7 +61,12 @@ const authApi = baseApi.injectEndpoints({
         },
       }),
     }),
-
+    logout: builder.mutation({
+      query: () => ({
+        url: `/webapis/auth/logout`,
+        method: "PATCH",
+      }),
+    }),
     // changedPassword: builder.mutation({
     //   query: (password) => ({
     //     url: "/auth/change-password",
@@ -95,6 +100,7 @@ export const {
   useLoggedInUserQuery,
   useCheckEmailExistenceMutation,
   useSendOtpMutation,
+  useLogoutMutation,
   // useChangedPasswordMutation,
   // useForgetPasswordMutation,
   // useResetPasswordMutation,
