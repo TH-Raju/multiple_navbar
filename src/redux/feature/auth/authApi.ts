@@ -34,6 +34,7 @@ const authApi = baseApi.injectEndpoints({
           password: userInfo.password,
         },
       }),
+      invalidatesTags: [TAGS.loggedInUser],
     }),
     loggedInUser: builder.query<IResponse<ILoggedInUser>, void>({
       query: () => ({
