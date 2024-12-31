@@ -27,6 +27,7 @@ export const OverallProgress = () => {
               strokeColor={"#EAB030"}
               strokeWidth={10}
               size={80}
+              className="font-mulish"
             />
           </Flex>
         </div>
@@ -47,6 +48,7 @@ export const OverallProgress = () => {
               strokeColor={"#EAB030"}
               strokeWidth={10}
               size={80}
+              className="font-mulish"
             />
           </Flex>
         </div>
@@ -67,6 +69,7 @@ export const OverallProgress = () => {
               strokeColor={"#EAB030"}
               strokeWidth={10}
               size={80}
+              className="font-mulish"
             />
           </Flex>
         </div>

@@ -1,9 +1,21 @@
 "use client";
-import { Button, Form, Input, Typography } from "antd";
+import { useChangePasswordMutation } from "@/redux/feature/profile/profile.api";
+import { Button, Form, Input, message, Typography } from "antd";
 
 export const Privacy = () => {
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
   const onFinish = (values) => {
     console.log(values);
+    const finalData = {
+      oldPassword: values.oldPass,
+      newPassword: values.newPass,
+      confirmPassword: values.conPass,
+    };
+    changePassword(finalData)
+      .unwrap()
+      .then((res) => {
+        message.success("Password changed successfully");
+      });
   };
 
   return (
@@ -98,6 +110,7 @@ export const Privacy = () => {
                 type="text"
                 className="bg-primaryColor font-medium text-white hover:bg-primaryColor/80 px-20 py-3 uppercase w-fit  mx-auto tracking-wider"
                 htmlType="submit"
+                loading={isLoading}
               >
                 Save
               </Button>

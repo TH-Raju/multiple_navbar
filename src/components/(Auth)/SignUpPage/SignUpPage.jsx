@@ -56,7 +56,7 @@ const SignUpPage = () => {
             .then((res) => {
               if (res.data.id) {
                 refetch();
-                router.push("/overview");
+                router.push("/storylining");
               }
             });
           message.success("Signup successfully");

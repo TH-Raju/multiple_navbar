@@ -27,7 +27,7 @@ const LogInPage = () => {
       .unwrap()
       .then((res) => {
         if (res.code === StatusCode.OK) {
-          router.push("/overview");
+          router.push("/storylining");
         }
       })
       .catch((error) => {

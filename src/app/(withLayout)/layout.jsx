@@ -106,13 +106,7 @@ const LayoutComponent = ({ children }) => {
     // },
     {
       key: "framing",
-      icon: (
-        <Image
-          src={AllImages.frameIcon}
-          alt="home"
-          className={collapsed ? "h-10 w-full object-contain" : ""}
-        />
-      ),
+      icon: collapsed ? <Image src={AllImages.frameIcon} alt="home" /> : "",
       label: <p className="text-base">Framing</p>,
       children: [
         {
@@ -121,7 +115,7 @@ const LayoutComponent = ({ children }) => {
             <Link
               rel="noopener noreferrer"
               href={`/framing`}
-              className="text-gray-500 font-medium"
+              className="text-gray-500 font-medium text-xs"
             >
               Overview
             </Link>
@@ -132,7 +126,7 @@ const LayoutComponent = ({ children }) => {
             <Link
               rel="noopener noreferrer"
               href={`/framing/${DataConstant.FM_SCQ_TOOL_ID}`}
-              className="text-gray-500 font-medium"
+              className="text-gray-500 font-medium text-xs"
             >
               SCQ
             </Link>
@@ -144,7 +138,7 @@ const LayoutComponent = ({ children }) => {
             <Link
               rel="noopener noreferrer"
               href={`/framing/${DataConstant.FM_HEADLINE_TOOL_ID}`}
-              className="text-gray-500 font-medium"
+              className="text-gray-500 font-medium text-xs"
             >
               Headline
             </Link>
@@ -156,7 +150,7 @@ const LayoutComponent = ({ children }) => {
             <Link
               rel="noopener noreferrer"
               href={`/framing/${DataConstant.FM_EVIDENCE_TOOL_ID}`}
-              className="text-gray-500 font-medium"
+              className="text-gray-500 font-medium text-xs"
             >
               Evidence
             </Link>
@@ -168,7 +162,7 @@ const LayoutComponent = ({ children }) => {
             <Link
               rel="noopener noreferrer"
               href={`/framing/${DataConstant.FM_CHALLENGE_TOOL_ID}`}
-              className="text-gray-500 font-medium"
+              className="text-gray-500 font-medium text-xs"
             >
               Challenge
             </Link>
@@ -180,7 +174,7 @@ const LayoutComponent = ({ children }) => {
             <Link
               rel="noopener noreferrer"
               href={`/framing/${DataConstant.FM_SCENARIOS_TOOL_ID}`}
-              className="text-gray-500 font-medium"
+              className="text-gray-500 font-medium text-xs"
             >
               Scenario
             </Link>
@@ -209,7 +203,7 @@ const LayoutComponent = ({ children }) => {
             <Link
               rel="noopener noreferrer"
               href={`/storylining`}
-              className="text-gray-500 font-medium"
+              className="text-gray-500 font-medium text-xs"
             >
               Overview
             </Link>
@@ -220,7 +214,7 @@ const LayoutComponent = ({ children }) => {
             <Link
               rel="noopener noreferrer"
               href={`/storylining/${DataConstant.HEADLINE_TOOL_ID}`}
-              className="text-gray-500 font-medium"
+              className="text-gray-500 font-medium text-xs"
             >
               Headline
             </Link>
@@ -232,7 +226,7 @@ const LayoutComponent = ({ children }) => {
             <Link
               rel="noopener noreferrer"
               href={`/storylining/${DataConstant.HORIZONTAL_LOGIC_TOOL_ID}`}
-              className="text-gray-500 font-medium"
+              className="text-gray-500 font-medium text-xs"
             >
               Horizontal Logic
             </Link>
@@ -244,7 +238,7 @@ const LayoutComponent = ({ children }) => {
             <Link
               rel="noopener noreferrer"
               href={`/storylining/${DataConstant.VERTICAL_LOGIC_TOOL_ID}`}
-              className="text-gray-500 font-medium"
+              className="text-gray-500 font-medium text-xs"
             >
               Vertical Logic
             </Link>
@@ -302,7 +296,7 @@ const LayoutComponent = ({ children }) => {
                 <Image
                   src={AllImages.logoBlack}
                   alt="logo"
-                  className="lg:w-fit h-fit"
+                  className=" h-fit"
                 />
                 <Dropdown menu={{ items: profileItems }}>
                   <div className="p-2">

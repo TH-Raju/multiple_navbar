@@ -17,7 +17,19 @@ const profileApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
+    changePassword: builder.mutation({
+      query: (data) => ({
+        url: `/webapis/user/changePassword`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useUploadImageMutation, useUpdateProfileMutation } = profileApi;
+export const {
+  useUploadImageMutation,
+  useUpdateProfileMutation,
+  useChangePasswordMutation,
+} = profileApi;
