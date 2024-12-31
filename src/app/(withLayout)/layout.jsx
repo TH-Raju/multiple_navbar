@@ -93,17 +93,17 @@ const LayoutComponent = ({ children }) => {
   ];
 
   const items = [
-    {
-      key: "overview",
-      icon: collapsed ? <Image src={AllImages.homeIcon} alt="home" /> : "",
-      // icon:  <Image src={AllImages.homeIcon} alt="home" />,
-      label: (
-        <p className="text-base flex gap-5 ml-2.5">
-          <Image src={AllImages.homeIcon} alt="home" />
-          <Link href={"/overview"}>Overview</Link>
-        </p>
-      ),
-    },
+    // {
+    //   key: "overview",
+    //   icon: collapsed ? <Image src={AllImages.homeIcon} alt="home" /> : "",
+    //   // icon:  <Image src={AllImages.homeIcon} alt="home" />,
+    //   label: (
+    //     <p className="text-base flex gap-5 ml-2.5">
+    //       <Image src={AllImages.homeIcon} alt="home" />
+    //       <Link href={"/overview"}>Overview</Link>
+    //     </p>
+    //   ),
+    // },
     {
       key: "framing",
       icon: (
