@@ -98,7 +98,7 @@ const LayoutComponent = ({ children }) => {
       icon: collapsed ? <Image src={AllImages.homeIcon} alt="home" /> : "",
       // icon:  <Image src={AllImages.homeIcon} alt="home" />,
       label: (
-        <p className="text-base flex gap-2 ml-2">
+        <p className="text-base flex gap-5 ml-2.5">
           <Image src={AllImages.homeIcon} alt="home" />
           <Link href={"/overview"}>Overview</Link>
         </p>
@@ -191,11 +191,15 @@ const LayoutComponent = ({ children }) => {
     },
     {
       key: "storylining",
-      icon: <Image src={AllImages.storyIcon} alt="home" />,
+      icon: collapsed ? <Image src={AllImages.storyIcon} alt="home" /> : "",
       label: (
-        <p className="text-base">
-          Storylining
-          {/* <Link href={"/storylining"}>Storylining</Link> */}
+        // <p className="text-base">
+        //   Storylining
+        //   {/* <Link href={"/storylining"}>Storylining</Link> */}
+        // </p>
+        <p className="text-base flex gap-2 ml-2">
+          <Image src={AllImages.storyIcon} alt="home" />
+          <p>Storylining</p>
         </p>
       ),
       children: [

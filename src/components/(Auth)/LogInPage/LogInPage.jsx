@@ -42,9 +42,13 @@ const LogInPage = () => {
     router.push("/overview");
   }
   return (
-    <div className="bg-gray-100 p-10">
-      <Image src={AllImages.logoBlack} alt="logo" className=" lg:h-full h-7" />
-      <div className="  h-screen flex flex-col justify-center -mt-14">
+    <div className="bg-gray-100 md:px-10 py-10">
+      <Image
+        src={AllImages.logoBlack}
+        alt="logo"
+        className=" lg:h-full mx-auto md:mx-0"
+      />
+      <div className="  h-screen flex flex-col justify-center">
         <div className="flex md:flex-row flex-col ">
           <div className=" flex flex-col justify-center max-w-xl px-6 py-8 bg-white shadow-xl rounded-lg  mx-auto md:w-[50%]">
             <GoogleLinkedInLogin />
