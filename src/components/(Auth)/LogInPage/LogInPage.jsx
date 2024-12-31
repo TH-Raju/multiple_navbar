@@ -39,7 +39,7 @@ const LogInPage = () => {
     return <MyLoading />;
   }
   if (data?.code === StatusCode.OK) {
-    router.push("/overview");
+    router.push("/storylining");
   }
   return (
     <div className="bg-gray-100 md:px-10 py-10">

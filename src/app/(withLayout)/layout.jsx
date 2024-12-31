@@ -106,7 +106,13 @@ const LayoutComponent = ({ children }) => {
     // },
     {
       key: "framing",
-      icon: collapsed ? <Image src={AllImages.frameIcon} alt="home" /> : "",
+      icon: (
+        <Image
+          src={AllImages.frameIcon}
+          alt="home"
+          className={collapsed ? "h-10 w-full object-contain" : ""}
+        />
+      ),
       label: <p className="text-base">Framing</p>,
       children: [
         {
@@ -271,7 +277,7 @@ const LayoutComponent = ({ children }) => {
               padding: 0,
               background: "#f5f6f8",
             }}
-            className="sticky w-full z-50 top-0 border-b"
+            className="sticky w-full z-30 top-0 border-b"
           >
             {/* Custom Button for Desktop Trigger */}
             <div className=" flex items-center h-full">

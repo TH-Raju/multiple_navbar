@@ -58,7 +58,7 @@ export const SingleLesson = () => {
   return (
     <>
       {isModalOpen === "true" && (
-        <div className="fixed top-0 left-0 flex flex-1 w-full bg-gray-500/50 p-2 md:p-5 lg:p-10 h-screen">
+        <div className="fixed top-0 left-0 flex flex-1 w-full bg-gray-500/50 p-2 md:p-5 lg:p-10 h-screen z-40">
           <div className="bg-white h-full w-full rounded-lg pb-0 overflow-y-auto relative">
             <div className="flex flex-col h-full">
               <div className="py-2 px-4 w-full flex justify-end">

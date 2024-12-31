@@ -93,7 +93,7 @@ const SignUpPage = () => {
     return <MyLoading />;
   }
   if (data?.code === StatusCode.OK) {
-    router.push("/overview");
+    router.push("/storylining");
   }
   return (
     <div className="">
