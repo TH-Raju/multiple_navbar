@@ -1,5 +1,6 @@
 "use client";
 
+import { MyProgressbar } from "@/components/shared/common/my-progressbar";
 import MySpacer from "@/components/shared/common/my-spacer";
 import MyTitleWithDivider from "@/components/shared/common/my-title-with-divider";
 import { ExerciseCard } from "@/components/shared/exercise-card";
@@ -29,7 +30,12 @@ export const ToolsPage = () => {
 
   return (
     <div>
-      <MyTitleWithDivider title="Lessons" />
+      <div className="flex items-center gap-4">
+        <MyTitleWithDivider title="Lessons" />
+        <div className="w-full">
+          <MyProgressbar value={30} />
+        </div>
+      </div>
       <div className="overflow-x-auto">
         {lessons?.length === 0 && (
           <p className="text-gray-400">No lessons found</p>
@@ -43,7 +49,12 @@ export const ToolsPage = () => {
 
       <MySpacer className="h-6" />
 
-      <MyTitleWithDivider title="Exercises" />
+      <div className="flex items-center gap-4">
+        <MyTitleWithDivider title="Exercises" />
+        <div className="w-full">
+          <MyProgressbar value={50} />
+        </div>
+      </div>
       {exercises?.length === 0 && (
         <p className="text-gray-400">No exercises found</p>
       )}
