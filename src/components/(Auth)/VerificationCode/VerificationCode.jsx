@@ -1,11 +1,10 @@
 "use client";
 import { AllImages } from "@/assets/AllImages";
-import { Form, Input, Button, Checkbox, Typography } from "antd"; // Import necessary components
+import { Button } from "antd"; // Import necessary components
 import Image from "next/image";
-import Link from "next/link";
-import OtpInput from "react-otp-input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import OtpInput from "react-otp-input";
 
 const VerificationCode = () => {
   const route = useRouter();
@@ -21,7 +20,7 @@ const VerificationCode = () => {
     <div className="bg-gray-100 p-10">
       <Image src={AllImages.logoBlack} alt="logo" className=" lg:h-full h-7" />
       <div className="  h-screen flex items-center -mt-14">
-        <div className=" flex flex-col justify-center max-w-xl px-6 py-8 bg-white shadow-xl rounded-lg  mx-auto md:w-[50%]">
+        <div className=" flex flex-col justify-center max-w-fit px-6 py-8 bg-white shadow-xl rounded-lg  mx-auto md:w-[50%]">
           <div className="text-gray-700">
             <h1 className="md:text-3xl text-2xl font-semibold ">
               Enter Verification Code
@@ -34,8 +33,8 @@ const VerificationCode = () => {
           <OtpInput
             value={otp}
             onChange={setOtp}
-            numInputs={4}
-            renderSeparator={<span className="lg:w-10   "> </span>}
+            numInputs={6}
+            renderSeparator={<span className="lg:w-5"> </span>}
             renderInput={(props) => (
               <input
                 {...props}

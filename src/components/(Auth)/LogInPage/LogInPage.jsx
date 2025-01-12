@@ -1,20 +1,54 @@
 "use client";
-import { Form, Input, Button, Checkbox, Typography } from "antd"; // Import necessary components
+import { Button, Checkbox, Form, Input, message, Typography } from "antd"; // Import necessary components
 
-import Link from "next/link";
-import GoogleLinkedInLogin from "./GoogleLinkedInLogin";
-import Image from "next/image";
 import { AllImages } from "@/assets/AllImages";
+import { MyLoading } from "@/components/shared/common/my-loading";
+import { StatusCode } from "@/constants/code.constant";
+import {
+  useLoggedInUserQuery,
+  useLogInMutation,
+} from "@/redux/feature/auth/authApi";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import GoogleLinkedInLogin from "./GoogleLinkedInLogin";
 
 const LogInPage = () => {
+  const router = useRouter();
+  const [logIn, { isLoading }] = useLogInMutation();
+  const { data, isLoading: isLoadingUser } = useLoggedInUserQuery();
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    const finalData = {
+      email: values?.email,
+      password: values?.password,
+    };
+    logIn(finalData)
+      .unwrap()
+      .then((res) => {
+        if (res.code === StatusCode.OK) {
+          router.push("/storylining");
+        }
+      })
+      .catch((error) => {
+        message.error(error?.data?.message || "Login failed");
+      });
   };
 
+  if (isLoadingUser) {
+    return <MyLoading />;
+  }
+  if (data?.code === StatusCode.OK) {
+    router.push("/storylining");
+  }
   return (
-    <div className="bg-gray-100 p-10">
-      <Image src={AllImages.logoBlack} alt="logo" className=" lg:h-full h-7" />
-      <div className="  h-screen flex flex-col justify-center -mt-14">
+    <div className="bg-gray-100 md:px-10 py-10">
+      <Image
+        src={AllImages.logoBlack}
+        alt="logo"
+        className=" lg:h-full mx-auto md:mx-0"
+      />
+      <div className="  h-screen flex flex-col justify-center">
         <div className="flex md:flex-row flex-col ">
           <div className=" flex flex-col justify-center max-w-xl px-6 py-8 bg-white shadow-xl rounded-lg  mx-auto md:w-[50%]">
             <GoogleLinkedInLogin />
@@ -73,6 +107,7 @@ const LogInPage = () => {
                   htmlType="submit"
                   className="bg-gray-900 text-white h-12 text-base font-semibold"
                   block
+                  loading={isLoading}
                 >
                   LOGIN
                 </Button>
